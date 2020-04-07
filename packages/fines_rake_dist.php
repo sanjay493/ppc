@@ -1,7 +1,10 @@
 <?php
-?>
+
+          ?> 
+        
 <div class="rake_dist">
-<h4 class="text-center"> Fines Rake Despatch </h4>
+<h4 class="text-center"> Fines  Rake Despatch </h4>
+
 
 <div class="d-flex table-data">
    <table class="table table-sm table-dark">
@@ -22,26 +25,38 @@
    </thead>
    <tbody>
 <?php 
-if(isset($_POST['custom_rake_dist'])){
- $date1 = textboxValue('date1');
-   $date2 = textboxValue('date2');
- $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
- // No of days calculation from the user input date rage
- $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
 
-     $results =getRakeFines();
-     for($i=0; $i<=5; $i++){
+if(isset($_POST['custom_rake_dist'])){
+  $date1 = textboxValue('date1');
+    $date2 = textboxValue('date2');
+ 
+  $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
+  // No of days calculation from the user input date rage
+  $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
+ 
+        
+ 
+         $table ="mines_desppatch";
+         // $column1 ="unit, cust,  COUNT(cust) AS rakes";
+         // $column2 ="unit, cust, SUM(wg_l/(wg_l+wg_f)) AS rakes";
+         $column3 ="unit, cust, SUM(wg_f/(wg_l+wg_f)) AS rakes";
+          $condition ="( rpt_date>='$date1' AND rpt_date<='$date2') ";
+          $groupbycondition =" cust, unit";
+          $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
+         
+     $results =getRakeTotal($column3, $table, $condition, $groupbycondition);
+          for($i=0; $i<=5; $i++){
        echo '<tr>';
        // Display Destination  at start of each row
        echo '<td>'.$destination[$i].'</td>';
        for($j=0; $j<=7;$j++){
             //Display Actual nos of rakes Count in row for each Mines in destination row
-               echo '<td>' . round($results[$i][$j],2).'</td>';
+               echo '<td>' . round($results[$i][$j],2).' </td>';
                  }
                  // Total Rake for a destination
                  echo '<td class="bg-success">'. round(array_sum($results[$i]),2). '</td>';
                  //Average Rakes for a particular destination , No of Days used to calculating average
-                 echo '<td class="bg-primary">'. round(array_sum($results[$i])/$daysInt,2). '</td>';
+                 echo '<td class="bg-primary">'. round(array_sum($results[$i])/$daysInt, 2). '</td>';
       echo '</tr>';
       
      }
@@ -63,7 +78,7 @@ if(isset($_POST['custom_rake_dist'])){
          }
          //Total sum of  rakes in last column for destination 
      echo '<td>'.round($total,2).'</td>';
-     echo '<td>'.round($total/$daysInt,2).'</td>';
+     echo '<td>'.round(($total/$daysInt),2).'</td>';
 
        echo '</tr>';
        echo '<tr class="bg-primary">';
@@ -74,9 +89,9 @@ if(isset($_POST['custom_rake_dist'])){
          
      }
       // Average no of rakes 
-     echo '<td>'.round($total/$daysInt,2).'</td>';
+     echo '<td>'.round(($total/$daysInt),2).'</td>';
      echo '</tr>';
-   }
+    }
  ?>
                 
     </tbody>

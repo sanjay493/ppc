@@ -3,7 +3,7 @@
           ?> 
         
 <div class="rake_dist">
-<h4 class="text-center"> Lump  Rake Despatch </h4>
+<h4 class="text-center"> Total  Rake Despatch </h4>
 
 
 <div class="d-flex table-data">
@@ -37,14 +37,14 @@ if(isset($_POST['custom_rake_dist'])){
         
  
          $table ="mines_desppatch";
-         // $column1 ="unit, cust,  COUNT(cust) AS rakes";
-         $column2 ="unit, cust, SUM(wg_l/(wg_l+wg_f)) AS rakes";
-         $column3 ="unit, cust, SUM(wg_f/(wg_l+wg_f)) AS rakes";
+         $column1 ="unit, cust,  COUNT(cust) AS rakes";
+         // $column2 ="unit, cust, SUM(wg_l/(wg_l+wg_f)) AS rakes";
+        // $column3 ="unit, cust, SUM(wg_f/(wg_l+wg_f)) AS rakes";
           $condition ="( rpt_date>='$date1' AND rpt_date<='$date2') ";
           $groupbycondition =" cust, unit";
           $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
          
-     $results =getRakeTotal($column2, $table, $condition, $groupbycondition);
+     $results =getRakeTotal($column1, $table, $condition, $groupbycondition);
           for($i=0; $i<=5; $i++){
        echo '<tr>';
        // Display Destination  at start of each row

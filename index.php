@@ -24,15 +24,6 @@ include_once ("../test/DB_Connect/operation.php");
  <div class="container text-center">
  <h1 class="py-4 bg-dark text-light rounded"><i class="fas fa-database"></i>PPC Data Management & Reporting System!</h1>
  
- <form action="" method="post">
-<div class="d-flex justify-content-center">
-<div class="row"> 
-<div class="col-md-6 input-group" ><?php inputElement("<i class='fas fa-calendar-day'></i>","date","Date1", "date1",""); ?> </div>
-<div class="col-md-6 input-group" ><?php inputElement("<i class='fas fa-calendar-day'></i>","date","Date2", "date2",""); ?> </div>
-</div></div>
-<?php buttonElement("btn-create","btn btn-primary","<i class ='fas fa-train'></i>","mth_despatch","data-toggle='tooltip' data-placement='bottom' title='Monthly Despatch Qty'"); ?>
-</form>
-
 
  <form action="" method="post">
 <div class="d-flex justify-content-center">
@@ -44,7 +35,7 @@ include_once ("../test/DB_Connect/operation.php");
 </form>
 </div>
 <!--  Start of rake distribution -->
-<div class="container-fluid qty_despatch justify-content-center">
+<div class="container qty_despatch justify-content-center">
 <div class="row">
 <div class="col-lg-6"><?php include("packages/lump_rake_dist.php"); ?></div>
 <div class="col-lg-6"><?php include("packages/fines_rake_dist.php"); ?></div>
@@ -61,8 +52,13 @@ include_once ("../test/DB_Connect/operation.php");
 </div>
 <!-- End of Qty Despatch Section -->
 
-<!-- Rake loading Time -->
-<div class="col-lg-8"></div>
+<!-- Total Rakes and Total Quantity -->
+<div class="container-fluid qty_despatch justify-content-center">
+<div class="row">
+<div class="col-lg-6"><?php include("packages/total_rake_dist.php"); ?> </div>
+<div class="col-lg-6"><?php include("packages/rake_total_qty.php"); ?> </div>
+</div>
+</div>
 
 
 

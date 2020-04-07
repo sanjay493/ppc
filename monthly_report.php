@@ -19,10 +19,12 @@ include_once ("../test/DB_Connect/mth_operation.php");
     <title>PPC Data Management & Reporting System!</title>
   </head>
   <body>
-  <?php include("../test/DB_Connect/nav.php"); ?>
+  
  <main>
- <div class="container-fluid text-center">
+ <?php include("../test/DB_Connect/nav.php"); ?>
+ <div class="container text-center">
  <h1 class="py-4 bg-dark text-light rounded"><i class="fas fa-database"></i>PPC Data Management & Reporting System!</h1>
+ </div>
  <form action="" method="post">
 <div class="d-flex justify-content-center">
 <div class="row"> 
@@ -31,15 +33,14 @@ include_once ("../test/DB_Connect/mth_operation.php");
 <?php buttonElement("btn-create","btn btn-primary","<i class ='fas fa-train'></i>","on_mth_mines","data-toggle='tooltip' data-placement='bottom' title='Monthly Despatch Qty'"); ?>
 </div>
 </form>
-</div>
 
 
-<div class="col-lg-12"><?php include("packages/on_mth_mines_despatch1.php"); ?> </div>
 
+<div class="col-lg-12"><?php include("packages/on_mth_mines_despatch.php"); ?> </div>
+<div class="col-lg-12"><?php include("packages/on_mth_mines_production.php"); ?> </div>
+<div class="col-lg-12"><?php include("packages/on_mth_mines_romob.php"); ?> </div>
  </main>
- <div>
-
- </div>
+ 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

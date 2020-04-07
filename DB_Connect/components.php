@@ -5,9 +5,7 @@ function inputElement($icon, $type,$placeholder, $name, $value) {
     <div class=\"input-group-prepend\">
     <div class=\"input-group-text bg-warning\">$icon</div>
     </div>
-      <input type='$type' class=\"form-control\" name='$name' id=\"inlineFormInputGroup\" value='$value' placeholder='$placeholder'>
-      <i class=\"fas fa-check-circle\"></i><i class=\"fas fa-exclamation-circle\"></i>
-      <small>Sir, You Missed me! </small>
+      <input type='$type' class=\"form-control\" name='$name' id=\"inlineFormInputGroup\" value='$value' placeholder='$placeholder'> 
 </div>
 ";
 

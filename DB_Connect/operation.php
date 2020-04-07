@@ -80,165 +80,6 @@ function getCustomData(){
 
 
 
-//Custom Report 1
-
-function getRakeLump(){
-
-    $date1 = textboxValue('date1');
-    $date2 = textboxValue('date2');
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
-    $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-    $rake= array_fill(0,6,array_fill(0,8,0));  
-    //$l_qty= array_fill(0,6,array_fill(0,8,0));  
-  // print_r($rake);
-    // print_r($destination);
-    // print_r($mines);
-    $sql = "SELECT cust, unit, SUM(wg_l/(wg_l+wg_f)) AS l_rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-    // $sql_l_qty = "SELECT cust, unit,SUM(l_qty) AS l_qty FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-    // $sql_f_qty = "SELECT cust, unit,SUM(f_qty) AS rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-   
-
-    $result = mysqli_query( $GLOBALS['con'],  $sql);
-    if(mysqli_num_rows($result)>0){
-     
-       while($row=mysqli_fetch_assoc($result)){
-               //echo $row['cust']." " .$row['unit']. " " .$row['rakes']. " <br />";
-                for($i=0; $i<=5; $i++){
-                  for($j=0; $j<=7;$j++){
-                    if ($destination[$i]==$row['cust'] && $mines[$j]==$row['unit']){
-                      $rake[$i][$j] =+$row['l_rakes'];
-                    }
-                  }
-                }
-
-            }  
-            
-            return $rake;     
-    }
-
-}
-
-
-//Fines Rake Function
-function getRakeFines(){
-
-  $date1 = textboxValue('date1');
-  $date2 = textboxValue('date2');
-  $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
-  $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-  $rake= array_fill(0,6,array_fill(0,8,0));  
-  //$l_qty= array_fill(0,6,array_fill(0,8,0));  
-// print_r($rake);
-  // print_r($destination);
-  // print_r($mines);
-  $sql = "SELECT cust, unit, SUM(wg_f/(wg_l+wg_f)) AS f_rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-  // $sql_l_qty = "SELECT cust, unit,SUM(l_qty) AS l_qty FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-  // $sql_f_qty = "SELECT cust, unit,SUM(f_qty) AS rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
- 
-
-  $result = mysqli_query( $GLOBALS['con'],  $sql);
-  if(mysqli_num_rows($result)>0){
-   
-     while($row=mysqli_fetch_assoc($result)){
-             //echo $row['cust']." " .$row['unit']. " " .$row['rakes']. " <br />";
-              for($i=0; $i<=5; $i++){
-                for($j=0; $j<=7;$j++){
-                  if ($destination[$i]==$row['cust'] && $mines[$j]==$row['unit']){
-                    $rake[$i][$j] =+$row['f_rakes'];
-                  }
-                }
-              }
-
-          }  
-          
-          return $rake;     
-  }
-
-}
-
-// Rake Lump Quantity fetching
-function getLumpDesp(){
-
-    $date1 = textboxValue('date1');
-    $date2 = textboxValue('date2');
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
-    $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-   // $rake= array_fill(0,6,array_fill(0,8,0));  
-    $l_qty= array_fill(0,6,array_fill(0,8,0));  
-  // print_r($rake);
-    // print_r($destination);
-    // print_r($mines);
-    //$sql = "SELECT cust, unit,COUNT(cust) AS rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-    $sql_l_qty = "SELECT cust, unit, SUM(l_qty) AS l_qty FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-  //  $sql_f_qty = "SELECT cust, unit,SUM(f_qty) AS rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-   
-    
-   // Lump Quantity distribution 
-   $result_l_qty = mysqli_query( $GLOBALS['con'],  $sql_l_qty);
-   if(mysqli_num_rows($result_l_qty)>0){
-    
-      while($row_l_qty=mysqli_fetch_assoc($result_l_qty)){
-           // echo $row_l_qty['cust']." " .$row_l_qty['unit']. " " .$row_l_qty['l_qty']. " <br />";
-               for($i=0; $i<=5; $i++){
-                 for($j=0; $j<=7;$j++){
-                   if ($destination[$i]==$row_l_qty['cust'] && $mines[$j]==$row_l_qty['unit']){
-                     $l_qty[$i][$j] =+$row_l_qty['l_qty'];
-                   }
-                 }
-               }
-
-           }  
-           
-           return $l_qty;     
-   }
-
-   
-
-}
-
-
-//Fines Despatch Quantity 
-function getFinesDesp(){
-
-    $date1 = textboxValue('date1');
-    $date2 = textboxValue('date2');
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
-    $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-    // $rake= array_fill(0,6,array_fill(0,8,0));  
-    $f_qty= array_fill(0,6,array_fill(0,8,0));  
-  // print_r($rake);
-    // print_r($destination);
-    // print_r($mines);
-    //$sql = "SELECT cust, unit,COUNT(cust) AS rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-    //$sql_l_qty = "SELECT cust, unit,SUM(l_qty) AS l_qty FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-    $sql_f_qty = "SELECT cust, unit,SUM(f_qty) AS f_qty FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY cust, unit";
-   
-
-       
-   // Fines Quantity distribution 
-   $result_f_qty = mysqli_query( $GLOBALS['con'],  $sql_f_qty);
-   if(mysqli_num_rows($result_f_qty)>0){
-    
-      while($row_f_qty=mysqli_fetch_assoc($result_f_qty)){
-           // echo $row_l_qty['cust']." " .$row_l_qty['unit']. " " .$row_l_qty['l_qty']. " <br />";
-               for($i=0; $i<=5; $i++){
-                 for($j=0; $j<=7;$j++){
-                   if ($destination[$i]==$row_f_qty['cust'] && $mines[$j]==$row_f_qty['unit']){
-                     $f_qty[$i][$j] =+$row_f_qty['f_qty'];
-                   }
-                 }
-               }
-
-           }  
-           
-           return $f_qty;     
-   }
-
-   
-
-}
-
-
 //rake Loading Time Average
 function getRakeTime(){
 
@@ -292,6 +133,7 @@ function updateData(){
         $sql = "
         UPDATE mines_desppatch SET unit= '$unit', rpt_date='$rpt_date', rake_no= '$rake_no', raketype='$raketype',cust= '$cust', wg_l=$wg_l, wg_f=$wg_f, arrival='$arrival', placement='$placement', lcompletion='$lcompletion', ldgtime= '$ldgtime', l_qty=$l_qty, f_qty=$f_qty WHERE md_id=$md_id
             ";
+          print_r($sql);
             if(mysqli_query($GLOBALS['con'], $sql)){
                 TextNode("success", "Data Successfully updated..");
             }   else{
@@ -363,3 +205,45 @@ echo "Error: " . $sql_delete . "<br>" . $GLOBALS['con']->error;
           return $textbox;
       }
   }
+
+
+  
+
+   function getRakeTotal($column, $table, $condition, $groupbycondition){
+                  
+                $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
+                $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+                $rake= array_fill(0,6,array_fill(0,8,0));  
+
+                $sql = "SELECT ".$column." FROM `". $table . "` WHERE " .$condition. "GROUP BY" .$groupbycondition;
+               // print_r($sql);
+
+                $result = mysqli_query( $GLOBALS['con'],  $sql);
+                if(mysqli_num_rows($result)>0){
+
+                while($row=mysqli_fetch_assoc($result)){
+                        //echo $row['cust']." " .$row['unit']. " " .$row['rakes']. " <br />";
+                          for($i=0; $i<=5; $i++){
+                            for($j=0; $j<=7;$j++){
+                              if ($destination[$i]==$row['cust'] && $mines[$j]==$row['unit']){
+                                $rake[$i][$j] =+$row['rakes'];
+                              }
+                            }
+                          }
+
+                      }  
+      
+     //print_r($rake);     
+      return $rake;     
+}
+
+}
+
+
+
+
+
+
+
+
+ 
