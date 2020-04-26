@@ -15,6 +15,7 @@
          Monthly Report
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="nav-link" href="final_mthly.php">Insert Monthly Data</a>
       <a class="nav-link" href="monthly_report.php">Monthly Report</a>
       <a class="nav-link" href="monthly_report_despatch_distribution.php">Despatch Distribution</a>
       </div> </li>
@@ -25,13 +26,13 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="rake_add.php">Rake Loading Entry</a>
-        <a class="dropdown-item" href="custom_report.php">Update Rakes Backlog</a>
+        <a class="dropdown-item" href="mines_custom_despatch.php">Update Rakes Backlog</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="iron_production.php">Mines Production Entry</a>
-        <a class="dropdown-item" href="iron_prod_updates.php">Mines Production Updates</a>
+        <a class="dropdown-item" href="mines_production.php">Mines Production Entry</a>
+        <a class="dropdown-item" href="mines_custom_production.php">Mines Production Updates</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="flux.php">Flux Report Entry</a>
-        <a class="dropdown-item" href="flux.php">Flux Report Updates</a>
+        <a class="dropdown-item" href="flux.php"></a>
+        <a class="dropdown-item" href="flux.php"></a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="flux.php">Steel Plants Report Entry</a>
         <a class="dropdown-item" href="flux.php">Steel Plants Report Updates</a>

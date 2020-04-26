@@ -7,10 +7,10 @@
 
 
 <div class="d-flex table-data">
-   <table class="table table-sm table-dark">
+   <table class="table table-sm table-bordered">
    <thead class="thead-dark">
    <tr class="table-info">
-   <th>Plant Name</th>
+   <th>Plant </th>
    <th>KBR</th>
    <th>MBR</th>
    <th>BOL</th>
@@ -30,22 +30,22 @@ if(isset($_POST['custom_rake_dist'])){
   $date1 = textboxValue('date1');
     $date2 = textboxValue('date2');
  
-  $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
+  $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
   // No of days calculation from the user input date rage
   $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
  
         
  
          $table ="mines_desppatch";
-         // $column1 ="unit, cust,  COUNT(cust) AS rakes";
+        // $column1 ="unit, cust,  COUNT(cust) AS rakes";
          // $column2 ="unit, cust, SUM(wg_l/(wg_l+wg_f)) AS rakes";
-         $column3 ="unit, cust, SUM(wg_f/(wg_l+wg_f)) AS rakes";
+          $column3 ="unit, cust, SUM(wg_f/(wg_l+wg_f)) AS rakes";
           $condition ="( rpt_date>='$date1' AND rpt_date<='$date2') ";
           $groupbycondition =" cust, unit";
           $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
          
      $results =getRakeTotal($column3, $table, $condition, $groupbycondition);
-          for($i=0; $i<=5; $i++){
+          for($i=0; $i<COUNT($destination); $i++){
        echo '<tr>';
        // Display Destination  at start of each row
        echo '<td>'.$destination[$i].'</td>';
@@ -56,7 +56,7 @@ if(isset($_POST['custom_rake_dist'])){
                  // Total Rake for a destination
                  echo '<td class="bg-success">'. round(array_sum($results[$i]),2). '</td>';
                  //Average Rakes for a particular destination , No of Days used to calculating average
-                 echo '<td class="bg-primary">'. round(array_sum($results[$i])/$daysInt, 2). '</td>';
+                 echo '<td class="table-primary">'. round(array_sum($results[$i])/$daysInt, 2). '</td>';
       echo '</tr>';
       
      }
@@ -66,9 +66,9 @@ if(isset($_POST['custom_rake_dist'])){
      echo '<td> Total </td>';
      $total=0;
      $cavg=array_fill(0,8,0);
-     for($j=0; $j<=7;$j++){
+     for($j=0; $j<(COUNT($mines)-1);$j++){
        $csum=array_fill(0,8,0);
-              for($i=0; $i<=5;$i++){
+              for($i=0; $i<COUNT($destination);$i++){
            $csum[$j]=$csum[$j]+$results[$i][$j];
            $total =$total+$results[$i][$j]; 
        }
@@ -81,7 +81,7 @@ if(isset($_POST['custom_rake_dist'])){
      echo '<td>'.round(($total/$daysInt),2).'</td>';
 
        echo '</tr>';
-       echo '<tr class="bg-primary">';
+       echo '<tr class="table-primary">';
        echo '<td> Avg </td>';
        for($j=0; $j<=7;$j++){
          // Average no of rakes Mines wise in a row

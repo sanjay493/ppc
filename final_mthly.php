@@ -5,42 +5,18 @@
                               <div class="col-md-6 input-group" ><?php inputElement("<i class='fas fa-calendar-day'></i>","date","Date1", "date1",""); ?> </div>
                               <div class="col-md-6 input-group" ><?php inputElement("<i class='fas fa-calendar-day'></i>","date","Date2", "date2",""); ?> </div>
                 </div>
-              <div class="row justify-content-center">  <?php buttonElement("btn-create","btn btn-primary","<i class ='fas fa-train'></i>","custom_rake_dist","data-toggle='tooltip' data-placement='bottom' title='Custom Rake Distribution'"); ?></div>
+              <div class="row justify-content-center">  <?php buttonElement("btn-create","btn btn-primary","<i class ='fas fa-train'></i>","mth_despatch","data-toggle='tooltip' data-placement='bottom' title='Custom Rake Distribution'"); ?></div>
          </form>
 </div>
-<!--  Start of rake distribution -->
-<div class="container qty_despatch justify-content-center">
-<div class="row">
-<div class="col-lg-6"><?php include("packages/lump_rake_dist.php"); ?></div>
-<div class="col-lg-6"><?php include("packages/fines_rake_dist.php"); ?></div>
-</div>
-</div>
-
-   <!-- End of Rake Distribution -->
 
 <div class="container-fluid qty_despatch justify-content-center">
 <div class="row">
-<div class="col-lg-6"><?php include("packages/rake_l_qty.php"); ?> </div>
-<div class="col-lg-6"><?php include("packages/rake_f_qty.php"); ?> </div>
+
 </div>
 </div>
 <!-- End of Qty Despatch Section -->
 
-<!-- Total Rakes and Total Quantity -->
-<div class="container-fluid qty_despatch justify-content-center">
-<div class="row">
-<div class="col-lg-6"><?php include("packages/total_rake_dist.php"); ?> </div>
-<div class="col-lg-6"><?php include("packages/rake_total_qty.php"); ?> </div>
-</div>
-</div>
-<!-- Total Production and Stock Increase/ Decrease -->
-<div class="container-fluid qty_despatch justify-content-center">
-<div class="row">
-<div class="col-lg-6"><?php include("packages/prod_desp_stock.php"); ?> </div>
-<div class="col-lg-6"><?php include("packages/rake_ldg_time.php"); ?> </div>
-</div>
-</div>
-<div class="col-lg-6"><?php include("packages/rake_ldg_time_mth.php"); ?> </div>
+
 
  </main>
 

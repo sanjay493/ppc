@@ -1,106 +1,109 @@
-$(".btnedit").click(e=>{
-let textValues = displayData(e);
-console.log(textValues);
+$(".btnedit").click((e) => {
+  let textValues = displayData(e);
+  //console.log(textValues);
+  console.log(unit);
 
-let id = $("input[name*='md_id']");
-let rpt_date = $("input[name*='rpt_date']");
-let unit = $("input[name*='unit']");
-let rake_no = $("input[name*='rake_no']");
-let raketype = $("input[name*='raketype']");
-let wg_l = $("input[name*='wg_l']");
-let wg_f = $("input[name*='wg_f']");
-let arrival = $("input[name*='arrival']");
-let placement = $("input[name*='placement']");
-let lcompletion = $("input[name*='lcompletion']");
-let ldgtime = $("input[name*='ldgtime']");
-let cust = $("input[name*='cust']");
-let l_qty = $("input[name*='l_qty']");
-let f_qty = $("input[name*='f_qty']");
+  let id = $("input[name*='md_id']");
+  let rpt_date = $("input[name*='rpt_date']");
+  let unit = $("select[name*='unit']");
+  let rake_no = $("input[name*='rake_no']");
+  let raketype = $("input[name*='raketype']");
+  let wg_l = $("input[name*='wg_l']");
+  let wg_f = $("input[name*='wg_f']");
+  let cust = $("input[name*='cust']");
+  let nature = $("input[name*='nature']");
+  let arrival = $("input[name*='arrival']");
+  let placement = $("input[name*='placement']");
+  let lcompletion = $("input[name*='lcompletion']");
+  let ldgtime = $("input[name*='ldgtime']");
+  let l_qty = $("input[name*='l_qty']");
+  let f_qty = $("input[name*='f_qty']");
+  let rr_no = $("input[name*='rr_no']");
 
-id.val(textValues[0]);
-rpt_date.val(textValues[1]);
-unit.val(textValues[2]);
-rake_no.val(textValues[3]);
-raketype.val(textValues[4]);
-wg_l.val(textValues[5]);
-wg_f.val(textValues[6]);
-arrival.val(textValues[7]);
-placement.val(textValues[8]);
-lcompletion.val(textValues[9]);
-ldgtime.val(textValues[10]);
-cust.val(textValues[11]);
-l_qty.val(textValues[12]);
-f_qty.val(textValues[13]);
+  id.val(textValues[0]);
+  rpt_date.val(textValues[1]);
+  unit.val(textValues[2]);
+  rake_no.val(textValues[3]);
+  raketype.val(textValues[4]);
+  wg_l.val(textValues[5]);
+  wg_f.val(textValues[6]);
+  cust.val(textValues[7]);
+  nature.val(textValues[8]);
+  arrival.val(textValues[9]);
+  placement.val(textValues[10]);
+  lcompletion.val(textValues[11]);
+  ldgtime.val(textValues[12]);
+  l_qty.val(textValues[13]);
+  f_qty.val(textValues[14]);
+  rr_no.val(textValues[15]);
 });
 
-function displayData(e){
-    let id=0;
-    const td =$("tbody tr td");
-    let textValues = [];
-    for (const value of td){
-        if(value.dataset.id == e.target.dataset.id){
-            console.log(e.target.dataset.id);
-            //console.log(value);
+function displayData(e) {
+  let id = 0;
+  const td = $("tbody tr td");
+  let textValues = [];
+  for (const value of td) {
+    if (value.dataset.id == e.target.dataset.id) {
+      //console.log(e.target.dataset.id);
+      //console.log(value);
 
-            textValues[id++] = value.textContent;
-        }
+      textValues[id++] = value.textContent;
     }
-    return textValues;
+  }
+  return textValues;
 }
 
+$(".prodnedit").click((e) => {
+  let textValues = displayData(e);
 
-// const form = document.getElementById("form");
-// const rpt_date = document.getElementById('rpt_date');
-// const unit = document.getElementById('unit');
-// const rake_no = document.getElementById('rake_no');
-// const raketype = document.getElementById('raketype');
-// const placement = document.getElementById('placement');
-// const lcompletion = document.getElementById('lcompletion');
-// const ldgtime = document.getElementById('ldgtime');
-// const cust = document.getElementById('cust');
-// const wg_f = document.getElementById('wg_f');
-// const wg_l = document.getElementById('wg_l');
-// const l_qty = document.getElementById('l_qty');
-// const f_qty = document.getElementById('f_qty');
+  let id = $("input[name*='id']");
+  let rpt_date = $("input[name*='rpt_date']");
+  let unit = $("select[name='unit']");
+  let dept_rm = $("input[name*='dept_rm']");
+  let cont_rm_fg = $("input[name*='cont_rm_fg']");
+  let dept_ob = $("input[name*='dept_ob']");
+  let cont_ob_fg = $("input[name*='cont_ob_fg']");
+  let cont_rm_darea = $("input[name*='cont_rm_darea']");
+  let cont_ob_darea = $("input[name*='cont_ob_darea']");
+  let lump_darea = $("input[name*='lump_darea']");
+  let fines_darea = $("input[name*='fines_darea']");
+  let cont_rm_p = $("input[name*='cont_rm_p']");
+  let cont_ob_p = $("input[name*='cont_ob_p']");
+  let lump_p = $("input[name*='lump_p']");
+  let fines_p = $("input[name*='fines_p']");
+  let screen_input = $("input[name*='screen_input']");
+  let dept_lump = $("input[name*='dept_lump']");
+  let dept_fines = $("input[name*='dept_fines']");
+  let drill = $("input[name*='drill']");
+  let bin_lump_stock = $("input[name*='bin_lump_stock']");
+  let bin_fines_stock = $("input[name*='bin_fines_stock']");
+  let ground_lump_stock = $("input[name*='ground_lump_stock']");
+  let ground_fines_stock = $("input[name*='ground_fines_stock']");
 
+  id.val(textValues[0]);
+  rpt_date.val(textValues[1]);
+  unit.val(textValues[2]);
+  dept_rm.val(textValues[3]);
+  cont_rm_fg.val(textValues[4]);
+  dept_ob.val(textValues[5]);
+  cont_ob_fg.val(textValues[6]);
+  cont_rm_darea.val(textValues[7]);
+  cont_ob_darea.val(textValues[8]);
+  lump_darea.val(textValues[9]);
+  fines_darea.val(textValues[10]);
+  cont_rm_p.val(textValues[11]);
+  cont_ob_p.val(textValues[12]);
+  lump_p.val(textValues[13]);
+  fines_p.val(textValues[14]);
+  screen_input.val(textValues[15]);
+  dept_lump.val(textValues[16]);
+  dept_fines.val(textValues[17]);
+  drill.val(textValues[22]);
+  bin_lump_stock.val(textValues[23]);
+  bin_fines_stock.val(textValues[24]);
+  ground_lump_stock.val(textValues[25]);
+  ground_fines_stock.val(textValues[26]);
 
-// form.addEventListener('create', (e)=>{
-//     console.log('click');
-//     e.preventDefault();
-//     checkInput();
-// });
-
-// function checkInput(){
-//     const rpt_date = rpt_date.value.trim();
-//     const unit = unit.value.trim();
-//     const rake_no = rake_no.value.trim();
-//     const raketype =raketype.value.trim();
-//     const arrival =arrival.value.trim();
-//     const placement = placement.value.trim();
-//     const lcompletion = lcompletion.value.trim();
-//     const ldgtime =ldgtime.value.trim();
-//     const cust =cust.value.trim();
-//     const wg_f = wg_f.value.trim();
-//     const wg_l = wg_l.value.trim();
-//     const l_qty = l_qty.value.trim();
-//     const f_qty = f_qty.value.trim();
-
-//     if(rpt_date == ' '){
-//               setErrorfor(rpt_date, "Report Date can't be blank");
-//     }else{
-//           setSuccessfor(rpt_date);
-//     }
-// }
-
-// function setErrorfor(input, message){
-//     const formInputGroup =input.parentElement;
-//     const small =formInputGroup.QuerySelector('small');
-//     small.innerText = message;
-//     formInputGroup.className = 'input-group error';
-
-// }
-// function setSuccessfor(input, message){
-//     const formInputGroup =input.parentElement;
-//     formInputGroup.className = 'input-group success';
-
-// }
+  console.log(textValues[2]);
+  unitcheck(textValues[2]);
+});

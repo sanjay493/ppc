@@ -1,44 +1,32 @@
 <?php
-include_once ("../test/DB_Connect/components.php");
-include_once ("../test/DB_Connect/mth_operation.php");
+include_once ("../test/DB_Connect/operation.php");
 
 ?>
-
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/fe77521a69.js" crossorigin="anonymous"></script>
-    <title>PPC Data Management & Reporting System!</title>
-  </head>
-  <body>
-  
- <main>
- <?php include("../test/DB_Connect/nav.php"); ?>
- <div class="container text-center">
- <h1 class="py-4 bg-dark text-light rounded"><i class="fas fa-database"></i>PPC Data Management & Reporting System!</h1>
- </div>
+<?php include("../test/DB_Connect/header.php"); ?>
  <form action="" method="post">
 <div class="d-flex justify-content-center">
 <div class="row"> 
-<div class="col-md-12 input-group" ><?php inputElement("","text","yyyymm", "yymm",""); ?> </div>
+<div class="col-md-12 input-group" ><?php inputElement("","text","YYYYMM", "yymm",""); ?> </div>
 </div>
 <?php buttonElement("btn-create","btn btn-primary","<i class ='fas fa-train'></i>","on_mth_mines","data-toggle='tooltip' data-placement='bottom' title='Monthly Despatch Qty'"); ?>
 </div>
 </form>
+<?php
+if(isset($_POST['on_mth_mines'])){
+$yymm =textboxValue('yymm');}
+else {$yymm = '20203';}
 
-
-
-<div class="col-lg-12"><?php include("packages/on_mth_mines_despatch.php"); ?> </div>
+$monthNum = (int)substr($yymm,4,2); 
+// Create date object to store the DateTime format 
+$dateObj = DateTime::createFromFormat('!m', $monthNum); 
+// Store the month name to variable 
+$monthName = $dateObj->format('F');      
+// Display output 
+?>
 <div class="col-lg-12"><?php include("packages/on_mth_mines_production.php"); ?> </div>
+<div class="col-lg-12"><?php include("packages/on_mth_mines_despatch.php"); ?> </div>
 <div class="col-lg-12"><?php include("packages/on_mth_mines_romob.php"); ?> </div>
+<div class="col-lg-12"><?php include("packages/on_mth_mines_flux.php"); ?> </div>
  </main>
  
 

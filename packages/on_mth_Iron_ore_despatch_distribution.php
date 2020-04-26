@@ -18,15 +18,24 @@ include_once ("../test/DB_Connect/mth_operation.php");
           $start_mth_lyr =strval((int)substr($yymm,0,4)-1).'04';
          }
          $comm=array("L", "F", "LS");
+
+         $yymm =textboxValue('yymm');
+
+        $monthNum = (int)substr($yymm,4,2); 
+        // Create date object to store the DateTime format 
+        $dateObj = DateTime::createFromFormat('!m', $monthNum); 
+        // Store the month name to variable 
+        $monthName = $dateObj->format('F');      
+        // Display output 
          ?>
 
 
 
 
-  <table class="table table-sm table-bordered">
-   <thead class="thead-dark">
+<table class="table table-sm table-bordered table-striped table-hover text-center">
+   <thead class="thead">
       <tr>
-         <th colspan="31"> Customer:: <?php echo $cust; ?> For the Month of <?php echo $yymm; ?></th>
+         <th colspan="31"> Customer:: <strong><?php echo $cust; ?></strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName. substr($yymm,0,4) ?><strong></th>
       </tr>
    <tr> 
             <th rowspan="3" class="text-center">Mines</th>

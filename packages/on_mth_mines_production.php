@@ -2,10 +2,10 @@
 
 <div class="row justify-content-center">
 <div class="d-flex table-data">
-   <table class="table table-sm table-dark">
-   <thead class="thead-dark">
+   <table class="table table-sm table-bordered table-striped table-hover text-center">
+   <thead class="thead">
    <tr>
-   <th colspan="12">Monthly  Despatch Performance  for the Month of  </th>
+   <th colspan="12" class="">Monthly  Production Performance  for the Month of  <strong><?php echo $monthName. substr($yymm,0,4) ?></strong></th>
    </tr>
    <tr>
    <th rowsapn="">Mines</th>
@@ -13,7 +13,7 @@
    <th colspan="5">For the Months</th>
    <th  colspan="5">Till The Months</th>
    </tr>
-   <tr class="info">
+   <tr class="table-success">
    <th></th>
    <th></th>
    <th>APP</th>
@@ -35,6 +35,16 @@
 if(isset($_POST['on_mth_mines'])){
        
         $yymm =textboxValue('yymm');
+
+        $monthNum = (int)substr($yymm,4,2); 
+        // Create date object to store the DateTime format 
+        $dateObj = DateTime::createFromFormat('!m', $monthNum); 
+        // Store the month name to variable 
+        $monthName = $dateObj->format('F');      
+        // Display output 
+        
+
+
         $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
         $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
         if((int)substr($yymm,4,2) <=3){
@@ -75,7 +85,7 @@ if(isset($_POST['on_mth_mines'])){
  
      for($i=0; $i<=8; $i++){
        echo '<tr>';
-       echo '<td rowspan="4">'.$mines[$i].'</td>';
+       echo '<td rowspan="4" class="td-bold">'.$mines[$i].'</td>';
              $j=0;
              while($j<=9){
                 echo '<tr>';
@@ -107,7 +117,7 @@ if(isset($_POST['on_mth_mines'])){
                  $j=$j+9;
              }
        // For Mines wise Total 
-       echo '<tr>';
+       echo '<tr class="table-primary">';
        echo '<td>Total</td>';
        echo  '<td>'.($results1[$i]+$results1[($i+9)]).'</td>';
                 echo  '<td>'.($results2[$i]+$results2[($i+9)]).'</td>';

@@ -4,24 +4,6 @@ require_once("components.php");
 
 
 
-
-
-  
-
-
-  function textboxValue($value1){
-  
-    //echo $GLOBALS['con'];
-      $textbox = mysqli_real_escape_string($GLOBALS['con'], trim($_POST[$value1]));
-      if(empty($textbox)){
-          return 0;
-          echo $textbox;
-      }else{
-          return $textbox;
-      }
-  }
-
-
   
 //Custom function used for Despatch Distribution Pages
     function sqlSelect($column, $table, $condition,$groupbycondition,$comm){
@@ -92,20 +74,42 @@ return $tempArray;
 
 
 
+function sqlFlux($column, $table, $condition2,$groupbycondition){
+  $sql ="SELECT ". $column ." Qty FROM `" . $table . "` WHERE " . $condition2." GROUP BY " .$groupbycondition;
+//  print_r($sql);
+  $result = mysqli_query($GLOBALS['con'], $sql ); 
+  //  8 Iron Ore mines 1 Flux Mines and Total of Iron Ore Mines; Total for flux is also considered 
+  $temp=0;
+  
+  if($sql){
+    //print_r($result);
+     if(mysqli_num_rows($result)>0){
+       while($row=mysqli_fetch_assoc($result)){
+                    $temp=+$row['Qty'];      
+                     
+            }    
+   }}
+else{     echo "Error: ".$sql."<br>" . $GLOBALS['con']->error; }
+//print_r($tempArray);
+return $temp;
+}
+
+
+
 //Fines Despatch Quantity 
 function getDespQty($column, $table, $condition, $groupbycondition){
 
   $date1 = textboxValue('date1');
   $date2 = textboxValue('date2');
-  $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
+  $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
   $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-  $qty= array_fill(0,6,array_fill(0,8,0));  
+  $qty= array_fill(0,(COUNT($destination)+1),array_fill(0,8,0));  
   $sql = "SELECT ".$column." FROM `". $table . "` WHERE " .$condition. "GROUP BY" .$groupbycondition;
 $result = mysqli_query( $GLOBALS['con'],  $sql);
 if(mysqli_num_rows($result)>0){
   
     while($row=mysqli_fetch_assoc($result)){
-            for($i=0; $i<=5; $i++){
+            for($i=0; $i<COUNT($destination); $i++){
               for($j=0; $j<=7;$j++){
                 if ($destination[$i]==$row['cust'] && $mines[$j]==$row['unit']){
                   $qty[$i][$j] =+$row['qty'];
@@ -115,6 +119,25 @@ if(mysqli_num_rows($result)>0){
         }   
         return $qty;     
 }
+}
+
+function mines_production_decpatch_stock($column,$table, $condition, $groupbycondition)
+{$desp_Table=array_fill(0,8,0);
+  $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+  $sql = "SELECT ".$column." FROM `". $table . "` WHERE " .$condition. "GROUP BY " .$groupbycondition;
+  //print_r($sql);
+  $result = mysqli_query( $GLOBALS['con'],  $sql);
+  //print_r($result);
+  if(mysqli_num_rows($result)>0){
+    while($row=mysqli_fetch_assoc($result)){
+
+      for($j=0; $j<=7; $j++){
+          if($row['unit']==$mines[$j]){
+              $desp_Table[$j]=$row['qty'];
+          }
+      }}  }
+     // print_r($desp_Table);
+      return $desp_Table;
 }
 ?>
 

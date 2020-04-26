@@ -1,52 +1,94 @@
-
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-body{
- 
+body {
   min-height: 100vh;
   margin: 0;
+  box-shadow: 9px 9px 0px #f8f9fa;
+  text-align: center;
 }
-.container{
- 
-    align-items: center;
-    justify-content: center;
-}
-.custom{
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3) ;
- 
-    
-}
-.form{
-    padding: 30px 40px;
+h5 {
+  color: rgb(0, 123, 255);
+  font-weight: 800;
+  box-shadow: 9px 9px 0px #f8f9fa;
 }
 
-input-group .success input{
- border-color: #2ecc71;
+.container {
+  align-items: center;
+  justify-content: center;
+}
+.custom_header {
+  background-color: rgb(31, 166, 122);
+}
+.custom_header h1 {
+  text-shadow: 4px 3px 0 #1d9d74, 9px 8px 0 rgba(0, 0, 0, 0.15);
+  color: white;
 }
 
-input-group .success i.fa-check-circle{
-    border-color: #2ecc71;
-    visibility: visible;
-   }
-.form-control .error input{
-    border-color: #e74c3c;
-   }
-
-  .input-group.error i.fa-exclamation-circle{
-       visibility: visible;
-    border-color: #e74c3c;
-   }
-
-.fa-exclamation-circle, .fa-check-circle{
-    visibility: hidden;
-    position: absolute;
-    top: 10px;
-    right: 20px;
+.custom {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-small{
-    visibility: hidden;
-    position: absolute;
-    top:  35px;
+.form {
+  padding: 30px 40px;
+}
+input,
+select {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  font-family: monospace;
+  color: crimson !important;
+}
+input[name="rpt_date"],
+input[name="cust"],
+input[name="unit"],
+input[name="raketype"],
+input[name="placement"],
+input[name="lcompletion"],
+input[name="ldgtime"],
+select[name*="unit"],
+input[name="rake_no"] {
+  border: 2px solid red !important;
+  border-radius: 4px !important;
+}
+
+.fa-exclamation-circle,
+.fa-check-circle {
+  visibility: hidden;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+small {
+  visibility: hidden;
+  position: absolute;
+  top: 35px;
+}
+
+.message {
+  position: absolute;
+  top: 30%;
+  right: 50%;
+  font-size: large;
+  background-color: rosybrown;
+  z-index: 1000;
+}
+
+.table th {
+  font-weight: 600;
+}
+.table td {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+.table-primary,
+.td-bold,
+tr:last-child {
+  font-weight: 600;
+}
+#hidden_div {
+  display: none;
 }
