@@ -215,7 +215,7 @@ if(isset($_POST['update'])){
 function getRakeTime($date1,$date2){
   $ldg_time = array_fill(0,16,0);
    $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
-   $sql_ldg_time = "SELECT unit, SUM(hour(ldgtime) * 3600 + (minute(ldgtime) * 60) + second(ldgtime)) as TotalTime,
+   $sql_ldg_time = "SELECT unit, (SUM(hour(ldgtime) * 3600 + (minute(ldgtime) * 60) + second(ldgtime))/COUNT(cust)) as AvgTime,
     COUNT(cust) as rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY unit";
  // Lump Quantity distribution 
  $result_ldg_time = mysqli_query( $GLOBALS['con'],  $sql_ldg_time);
@@ -225,7 +225,7 @@ function getRakeTime($date1,$date2){
            for($j=0; $j<=7;$j++){
                if ( $mines[$j]==$row_ldg_time['unit']){
                  // total loading time in seconds
-                    $ldg_time[$j] =+round($row_ldg_time['TotalTime'],0);   
+                    $ldg_time[$j] =+round($row_ldg_time['AvgTime'],0);   
                     //total rakes mines wise
                     $ldg_time[$j+8] =+$row_ldg_time['rakes'];   
                     //$ldg_time[16] = $ldg_time[16]+$row_ldg_time['rakes'];  
@@ -287,11 +287,24 @@ function TextNode($classname, $msg){
     echo $element;
 }
 
+function count_digit($number) {
+  if(strlen($number)<2){
+    return '0'.strval($number);
+  }
+  else{
+    return strval($number);
+  }
+}
+
+
 function secToHR($seconds) {
   $hours = floor($seconds / 3600);
-  $minutes = floor(($seconds / 60) % 60);
+  $minutes = round(($seconds / 60) % 60);
   $seconds = $seconds % 60;
-  return "$hours:$minutes:$seconds";
+   
+  $timevalue1=count_digit($hours).':'.count_digit($minutes);
+
+  return $timevalue1;
 }
 
 
@@ -302,16 +315,16 @@ if(isset($_POST['mth_despatch'])){
       $date1 = textboxValue('date1');
       $date2 = textboxValue('date2');
     // Monthly Despatch insertion in Monthly Table from Daily Despatch Table
-dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'L', SUM(l_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
-dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'F', SUM(f_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
-     // Monthly Production insertion in Monthly Table from Daily Production Table
+// dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'L', SUM(l_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
+// dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'F', SUM(f_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
+//      // Monthly Production insertion in Monthly Table from Daily Production Table
 dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'L', SUM(dept_lump+lump_darea+lump_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
 dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'F', SUM(dept_fines+fines_darea+fines_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
   //Monthly ROM,  OB & DRILL insertion in Monthly Table from Daily ROM,  OB & DRILL Table
-  dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'OB', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  rake_ldg_time_mth_table($date1,$date2);
+ dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'OB', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+  dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(drill)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+   // rake_ldg_time_mth_table($date1,$date2);
 }
 
 function dly_mth($mth_table, $mth_table_columns, $dly_table, $dly_table_columns,$conditions){
@@ -325,7 +338,7 @@ echo "Error: " . $sqlmth_from_dly . "<br>" . $GLOBALS['con']->error;
 
 
 function rake_ldg_time_mth_table($date1,$date2){
- $sql ="INSERT INTO u_rake_ldg_time (unit, yymm,ldg_time_sec, rakes) SELECT unit, EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear ,SUM(hour(ldgtime) * 3600 + (minute(ldgtime) * 60) + second(ldgtime)) as TotalTime,
+ $sql ="INSERT INTO u_rake_ldg_time (unit, yymm,ldg_time, rakes) SELECT unit, EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, SEC_TO_TIME(SUM(hour(ldgtime) * 3600 + (minute(ldgtime) * 60) + second(ldgtime))/COUNT(cust)) as AvgTime,
  COUNT(cust) as rakes FROM mines_desppatch WHERE ( rpt_date>='$date1' AND rpt_date<='$date2') GROUP BY unit";
 if(mysqli_query($GLOBALS['con'],$sql)){
   TextNode("success", " Rakes Record Successfully Inserted..u_rake_ldg_time Table..");
@@ -380,10 +393,107 @@ if(mysqli_query($GLOBALS['con'],$sql)){
 
 }
 
+function monthName_yymm($arg){
+  $monthNum = (int)substr($arg,4,2); 
+  // Create date object to store the DateTime format 
+  $dateObj = DateTime::createFromFormat('!m', $monthNum); 
+  // Store the month name to variable 
+  return $dateObj->format('M');      
+  // Display output 
+        }
+
+      
+
+
+        function mth_rake_ldg($yymm1, $yymm2,$yymm_list){
+          $dummyArray =array_fill(0,12,array_fill(0,16,0));
+             $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Avg");
+           // $months=array("Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar");
+        $sql ="SELECT yymm,unit,SUM(hour(ldg_time) * 3600 + (minute(ldg_time) * 60) + second(ldg_time)) as ldg_time_sec, rakes FROM u_rake_ldg_time WHERE yymm>=$yymm1 AND yymm<=$yymm2 GROUP BY unit, yymm ORDER BY  FIELD (yymm,$yymm_list), FIELD(unit, 'KRB', 'MBR','BOL', 'BAR','TAL','KAL','GUA','MPR')";
+        $str_arr = explode (",", $yymm_list);
+        
+        //print_r($sql);
+      // print_r(count($str_arr));
+       //print_r((int)substr($str_arr[1],1,-1));
+
+        $result = mysqli_query($GLOBALS['con'], $sql ); 
+        if(mysqli_num_rows($result)>0){
+          while($row=mysqli_fetch_assoc($result)){
+           // print_r($row);
+            for($i=0; $i<count($str_arr); $i++){
+              for($j=0; $j<8;$j++){
+                if((int)substr($str_arr[$i],1,-1)==$row['yymm'] && $row['unit']==$mines[$j]){
+                  $dummyArray[$i][$j] +=$row['ldg_time_sec'];
+                  $dummyArray[$i][$j+8]+=$row['rakes'];
+                //print_r((int)substr($str_arr[$i],1,-1));
+                //  print_r($mines[$j]);
+                //  print_r($row['unit']);
+                 //print_r($dummyArray[$i][$j]);
+                }}
+               
+              }
+            }}
+       return $dummyArray;
+           // print_r($row);
+       }
+         
+      function maxDaily($column, $table){
+
+        
+        $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+        $sql = "SELECT ".$column." FROM ".$table." GROUP BY unit ";
+        //print_r($sql);
+        $result = mysqli_query($GLOBALS['con'], $sql ); 
+        $dummyArray=array_fill(0,16,0);
+        if(mysqli_num_rows($result)>0){
+          while($row=mysqli_fetch_assoc($result)){
+      for($i=0; $i<8;$i++){
+             if($row['unit']==$mines[$i]){
+               $dummyArray[$i]+=$row['maxItem'];
+               $dummyArray[$i+8]=$row['rpt_date'];
+
+             }
+      }
+      }}
+    //print_r($dummyArray);
+    return $dummyArray;
+    }
+      
+    function maxMthly($table, $comm_list){
+      $sql="SELECT temp1.yymm, temp1.unit,  temp1.comm,  temp1.act_qty FROM ".$table." temp1 INNER JOIN (SELECT unit, comm, MAX(act_qty) AS Maxit FROM ".$table." GROUP BY unit,comm) temp2 ON temp1.unit = temp2.unit AND temp1.act_qty =temp2.Maxit";
 
 
 
+      $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+     
+      $result = mysqli_query($GLOBALS['con'], $sql ); 
+      $str_arr = explode (",", $comm_list);
+      //print_r($str_arr);
+      $dummyArray=array_fill(0,count($str_arr),array_fill(0,16,0));
 
+      if(mysqli_num_rows($result)>0){
+        while($row=mysqli_fetch_assoc($result)){
+          for($i=0; $i<count($str_arr); $i++){
+            for($j=0; $j<8;$j++){
+             // print_r(substr($str_arr[$i],1,-1));
+              if(substr($str_arr[$i],1,-1)==$row['comm'] && $row['unit']==$mines[$j]){
+
+                      $dummyArray[$i][$j]=$row['act_qty'];
+             $dummyArray[$i][$j+8]=$row['yymm'];
+            //  print_r($row['unit']);
+            //  print_r($row['yymm']);
+               // print_r($row['comm']);
+            //  print_r($row['act_qty']);
+            //  print_r("-");
+             }
+             
+             }
+           }
+    }
+    }
+  //print_r($dummyArray);
+  return $dummyArray;
+  }
 
 
 

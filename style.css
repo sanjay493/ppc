@@ -92,3 +92,53 @@ tr:last-child {
 #hidden_div {
   display: none;
 }
+
+.custom_legend {
+  display: grid;
+}
+
+.header {
+  background: crimson;
+  color: whitesmoke !important;
+  font-weight: 600;
+}
+
+.txtvertical {
+  position: absolute;
+  writing-mode: vertical-lr;
+  grid-column: 1 / 1;
+  justify-self: start;
+  margin-left: -5px;
+  margin-top: 10px;
+  background: blueviolet;
+  padding: 2px;
+  box-shadow: black;
+}
+.textP {
+  grid-row: 2 / 4;
+}
+.textD {
+  grid-row: 5 / 8;
+  letter-spacing: 0.1em;
+}
+.textE {
+  grid-row: 8 / 12;
+  letter-spacing: 0.189em;
+}
+.lump {
+  box-sizing: border-box;
+  height: 3.2rem;
+  text-align: center;
+  color: crimson;
+  font-size: 1.3rem;
+  border: solid 1px darkgrey;
+  line-height: 22px;
+}
+.lump span {
+  color: rgb(87, 9, 155);
+  opacity: 0.7;
+  font-size: 1rem;
+}
+.carousel-item {
+  height: 40rem !important;
+}

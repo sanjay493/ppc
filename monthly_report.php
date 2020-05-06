@@ -1,6 +1,8 @@
 <?php
 include_once ("../test/DB_Connect/operation.php");
 
+include_once("../test/packages/on_mth_Iron_ore_despatch_distribution.php");
+
 ?>
 <?php include("../test/DB_Connect/header.php"); ?>
  <form action="" method="post">
@@ -27,6 +29,19 @@ $monthName = $dateObj->format('F');
 <div class="col-lg-12"><?php include("packages/on_mth_mines_despatch.php"); ?> </div>
 <div class="col-lg-12"><?php include("packages/on_mth_mines_romob.php"); ?> </div>
 <div class="col-lg-12"><?php include("packages/on_mth_mines_flux.php"); ?> </div>
+
+
+<div class="container-fluid">
+<h4 class="text-center"> Monthly Despatch Distribution Plant Wise</h4>
+
+<?php
+        $cust =array("BSL", "DSP", "RSP","ISP", "BSP","SALE");
+        $yymm =textboxValue('yymm');
+        for($i=0; $i<=5; $i++){
+       plantdistribution($yymm,$cust[$i]);
+        }
+  ?>
+</div>
  </main>
  
 

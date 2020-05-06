@@ -24,7 +24,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
   </head>
 
 
-  <body onload="showDiv()">
+  <body>
   <?php include("../test/DB_Connect/nav.php"); ?>
  <main>
  <div class="container text-center custom_header">

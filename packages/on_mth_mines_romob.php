@@ -55,8 +55,8 @@ if(isset($_POST['on_mth_mines'])){
           $start_mth_cyr =substr($yymm,0,4).'04';
           $start_mth_lyr =strval((int)substr($yymm,0,4)-1).'04';
          }
-        $table1 ="u_rm_plan";
-        $table2 ="u_rm_mth";
+        $table1 ="u_pr_plan";
+        $table2 ="u_pr_mth";
         $column1 ="unit, comm, SUM(plan_qty) as";
         $column2 ="unit, comm, SUM(act_qty) as";
          $condition1 ="yymm='$yymm'";
@@ -65,7 +65,7 @@ if(isset($_POST['on_mth_mines'])){
          $condition4= "(yymm>='$start_mth_lyr' AND yymm<='$lyr_mth')";
 
          $groupbycondition ="unit, comm";
-         $comm=array("L", "F");
+         $comm=array("RM", "OB");
          $comm1  =array("LS");
          $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
          $mines1=array("KTR");
@@ -76,11 +76,11 @@ if(isset($_POST['on_mth_mines'])){
         $results5=sqlPRDSRM( $column2, $table2, $condition3,$groupbycondition, $comm, $mines);
         $results6=sqlPRDSRM( $column2, $table2, $condition4,$groupbycondition, $comm, $mines);
            
-   //  print_r($results1);
-   //  print_r($results2);
+    //print_r($results1);
+    // print_r($results2);
    //  print_r($results3);
    //  print_r($results4);
-   //  print_r($results5);
+    print_r($results5);
    //  print_r($results6);
  
      for($i=0; $i<=8; $i++){

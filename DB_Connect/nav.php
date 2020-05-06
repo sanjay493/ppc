@@ -15,9 +15,11 @@
          Monthly Report
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="nav-link" href="betn_dates.php">Get Data during Dates</a>
       <a class="nav-link" href="final_mthly.php">Insert Monthly Data</a>
-      <a class="nav-link" href="monthly_report.php">Monthly Report</a>
-      <a class="nav-link" href="monthly_report_despatch_distribution.php">Despatch Distribution</a>
+      <a class="nav-link" href="monthly_report.php">For the Monthly Report</a>
+      
+      <a class="nav-link" href="mth_data.php">Month Wise Figures</a>
       </div> </li>
 
     <li class="nav-item dropdown">

@@ -46,7 +46,7 @@ if(isset($_POST['on_mth_mines'])){
 
 
         $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
-        $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
+       // $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
         if((int)substr($yymm,4,2) <=3){
             $start_mth_cyr =strval((int)substr($yymm,0,4)-1).'04';
             $start_mth_lyr =strval((int)substr($yymm,0,4)-2).'04';

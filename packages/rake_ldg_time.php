@@ -40,11 +40,13 @@ if(isset($_POST['custom_rake_dist'])){
                  echo '<td>Average Loading Time</td>';
 
        for($j=0; $j<=7;$j++){
-               echo '<td>'.secToHR($results[$j]/$results[$j+8]).' </td>';
-               $sumLdg=+$results[$j];
-               $sumRake=+$results[$j+8];
+               echo '<td>'.secToHR($results[$j]).' </td>';
+               $sumLdg+=$results[$j]*$results[$j+8];
+               $sumRake+=$results[$j+8];
+               
                  }
-
+//print_r($sumLdg);
+//print_r($sumRake);
                  // Total Average
                  echo '<td class="bg-success">'. secToHR($sumLdg/$sumRake). '</td>';
       echo '</tr>';

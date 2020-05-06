@@ -139,6 +139,88 @@ function mines_production_decpatch_stock($column,$table, $condition, $groupbycon
      // print_r($desp_Table);
       return $desp_Table;
 }
+
+function month_list( $yymm1,$yymm2){
+  //print_r($yymm1);
+  $start_yr=(int)substr($yymm1,0,4);
+  $end_yr=(int)substr($yymm2,0,4);
+$start_mth =(int)substr($yymm1,4,2);
+$end_mth =(int)substr($yymm2,4,2);
+
+      $yrDiffMth =($end_yr-$start_yr)*12;
+      $mthDiff=$end_mth-$start_mth+1;
+       $no_of_mth =$yrDiffMth+$mthDiff;
+$yr=$start_yr;
+$mth=$start_mth;
+// print_r($start_yr);
+// print_r($end_yr);
+// print_r($yr);
+// print_r($start_mth);
+// print_r($end_mth);
+// print_r($mth);
+
+$dummyMth=[];
+for($i=0; $i<$no_of_mth; $i++)
+{ if(strlen((string)$mth)==1){
+  $mth ='0'.strval($mth);
+  //print_r($mth);
+}
+$dummy=strval($yr).strval($mth);
+array_push($dummyMth,$dummy);
+$mth++;
+  if($mth>12){
+      $mth=1;
+       $yr++;}
+  }    
+  //print_r($dummyMth);
+return $dummyMth;
+}
+
+
+function production_despatch_mth($column2,$table2,$condition3,$groupbycondition,$orderby,$yymm1,$yymm2){
+  $sql= "SELECT ".$column2." FROM ".$table2." WHERE ". $condition3." GROUP BY ".$groupbycondition." ORDER BY ".$orderby;
+$result = mysqli_query($GLOBALS['con'], $sql ); 
+
+//print_r($sql);
+$dummyMth=month_list($yymm1,$yymm2);
+//print_r($dummyMth);
+$dummyArray=array_fill(0,3*COUNT($dummyMth),0);
+//$dummyArray=array();
+//print_r($dummyMth);
+//print_r("-");
+//print_r(3*COUNT($dummyMth));
+if(mysqli_num_rows($result)>0){
+  while($row=mysqli_fetch_assoc($result)){
+       
+        $m=0;$a=0;
+    while($a<3*COUNT($dummyMth))
+     {      
+             if($row['yymm']==(string)$dummyMth[$a/3]){
+            $dummyArray[$a]=(string)$dummyMth[$a/3];
+          //print_r($row['yymm']);
+                  if($row['comm']=='L'){
+                  $dummyArray[$a+1]+=$row['act_qty'];}
+                  else{
+                  $dummyArray[$a+2]+=$row['act_qty'];
+                }}else{
+         //print_r($row['yymm']);
+         // print_r('-');
+          $dummyArray[$a]=(string)$dummyMth[$a/3];
+                  $dummyArray[$a+1]+=0;
+                  $dummyArray[$a+2]+=0;
+                }
+                $a=$a+3;
+                $m++;
+     }
+    
+
+  }
+  
+}
+print_r($dummyArray);
+return $dummyArray;
+}
+
 ?>
 
 
