@@ -2,6 +2,7 @@
 include_once ("../test/DB_Connect/operation.php");
 
 include_once("../test/packages/on_mth_Iron_ore_despatch_distribution.php");
+include_once("../test/packages/on_mth_Iron_ore_despatch_distribution_all.php");
 
 ?>
 <?php include("../test/DB_Connect/header.php"); ?>
@@ -35,11 +36,12 @@ $monthName = $dateObj->format('F');
 <h4 class="text-center"> Monthly Despatch Distribution Plant Wise</h4>
 
 <?php
-        $cust =array("BSL", "DSP", "RSP","ISP", "BSP","SALE");
+        $cust =array("BSL", "DSP", "RSP","ISP", "BSP","PMSB","ESCL");
         $yymm =textboxValue('yymm');
-        for($i=0; $i<=5; $i++){
+        for($i=0; $i<COUNT($cust); $i++){
        plantdistribution($yymm,$cust[$i]);
         }
+        plantdistribution_all($yymm);  
   ?>
 </div>
  </main>

@@ -45,6 +45,7 @@ if(isset($_POST['custom_rake_dist'])){
           $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
          
      $results =getRakeTotal($column1, $table, $condition, $groupbycondition);
+     if(!empty($results)){
           for($i=0; $i<COUNT($destination); $i++){
        echo '<tr>';
        // Display Destination  at start of each row
@@ -58,7 +59,10 @@ if(isset($_POST['custom_rake_dist'])){
                  //Average Rakes for a particular destination , No of Days used to calculating average
                  echo '<td class="table-primary">'. round(array_sum($results[$i])/$daysInt, 2). '</td>';
       echo '</tr>';
-      
+                }
+     }
+     else{
+      TextNode("error", "No Data of the selected duration");
      }
 
  

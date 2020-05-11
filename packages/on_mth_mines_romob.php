@@ -80,7 +80,7 @@ if(isset($_POST['on_mth_mines'])){
     // print_r($results2);
    //  print_r($results3);
    //  print_r($results4);
-    print_r($results5);
+    //print_r($results5);
    //  print_r($results6);
  
      for($i=0; $i<=8; $i++){

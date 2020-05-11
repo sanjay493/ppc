@@ -1,5 +1,11 @@
+
+
+
 <?php
 include("../test/DB_Connect/header.php"); 
+
+
+
 
 $result1=maxDaily("unit, rpt_date, MAX(dept_lump+lump_darea+lump_p) as maxItem", "u_pr_dly");
 $result2=maxDaily("unit, rpt_date, MAX(dept_fines+fines_darea+fines_p) as maxItem", "u_pr_dly");
@@ -23,6 +29,8 @@ $mines=array("Kiriburu", "Meghahatuburu","Bolani", "Barsua","Taldih","Kalta","Gu
 
 
 ?>
+
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -126,12 +134,8 @@ $mines=array("Kiriburu", "Meghahatuburu","Bolani", "Barsua","Taldih","Kalta","Gu
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="myapp.js"></script>
     <link rel="stylesheet" href="carousel.css">
-    <script>
 
-$('.carousel').carousel({
-  interval: 5000,
-  pause:"hover"
-})
+    <script>
 
 
 </script>

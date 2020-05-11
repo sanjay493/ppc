@@ -43,6 +43,7 @@ $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
  $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
 
      $results = getDespQty($column3, $table, $condition, $groupbycondition);
+     if(!empty($results)){
      for($i=0; $i<COUNT($destination); $i++){
        echo '<tr>';
        // Display Destination  at start of each row
@@ -56,7 +57,10 @@ $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
                  //Average Rakes for a particular destination , No of Days used to calculating average
                  echo '<td class="table-primary">'. round(array_sum($results[$i])/$daysInt,0). '</td>';
       echo '</tr>';
-      
+               }
+     }
+     else{
+      TextNode("error", "No Data of the selected duration");
      }
 
  

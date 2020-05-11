@@ -37,7 +37,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
 <table class="table table-sm table-bordered table-striped table-hover text-center">
    <thead class="thead">
       <tr>
-         <th colspan="31" class="bg-primary text-white"> Customer:: <strong><?php echo $cust; ?></strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName. substr($yymm,0,4) ?><strong></th>
+         <th colspan="31"> Customer:: <strong><?php echo $cust; ?></strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName. substr($yymm,0,4) ?><strong></th>
       </tr>
    <tr> 
             <th rowspan="3" class="text-center">Mines</th>
@@ -47,12 +47,12 @@ include_once ("../test/DB_Connect/mth_operation.php");
    </tr>
    <tr> 
           
-            <th   colspan="5" class="text-center bg-success">For the Month</th>
-            <th   colspan="5" class="text-center bg-warning">Till the Month</th>
-            <th   colspan="5" class="text-center bg-success">For the Month</th>
-            <th   colspan="5" class="text-center bg-warning">Till the Month</th>
-            <th   colspan="5" class="text-center bg-success">For the Month</th>
-            <th   colspan="5" class="text-center bg-warning">Till the Month</th>
+            <th   colspan="5" class="text-center">For the Month</th>
+            <th   colspan="5" class="text-center">Till the Month</th>
+            <th   colspan="5" class="text-center">For the Month</th>
+            <th   colspan="5" class="text-center">Till the Month</th>
+            <th   colspan="5" class="text-center">For the Month</th>
+            <th   colspan="5" class="text-center">Till the Month</th>
    </tr>
   
    <tr>
@@ -124,35 +124,22 @@ include_once ("../test/DB_Connect/mth_operation.php");
                 echo  '<td>'.round(($results5[$i+$j]/$results4[$i+$j])*100,0).'</td>';
                    }else { echo '<td></td>';}
                  echo    '<td>'.$results6[$i+$j].'</td>'; 
-                 if($results6[$i+$j]!==0){
+                 if($results3[$i+$j]!==0){
                     echo  '<td>'.round((($results5[$i+$j]-$results6[$i+$j])/$results6[$i+$j])*100,0).'</td>';
-                       }else { echo '<td></td>';}   
+                       }else { echo '<td></td>';}  
+                
+                       echo  '<td>'.($results1[$i+$j]+$results4[$i+$j]).'</td>';
+                  echo  '<td>'.($results2[$i+$j]+$results5[$i+$j]).'</td>';
+                   if(($results1[$i+$j]+$results4[$i+$j])!==0){
+                echo  '<td>'.round(($results2[$i+$j]+$results5[$i+$j])/($results1[$i+$j]+$results4[$i+$j])*100,0).'</td>';
+                   }else { echo '<td></td>';}
+                 echo    '<td>'.($results3[$i+$j]+$results6[$i+$j]).'</td>'; 
+                 if($results3[$i+$j]!==0){
+                    echo  '<td>'.round(($results2[$i+$j]+$results5[$i+$j]-$results3[$i+$j]-$results6[$i+$j])/($results3[$i+$j]+$results6[$i+$j])*100,0).'</td>';
+                       }else { echo '<td></td>';}  
 
                     $j=$j+9;
                      }
-
-                     echo  '<td>'.($results1[$i]+$results1[$i+9]).'</td>';
-                     echo  '<td>'.($results2[$i]+$results2[$i+9]).'</td>';
-                      if(($results1[$i]+$results1[$i+9])!==0){
-                   echo  '<td>'.round((($results2[$i]+$results2[$i+9])/($results1[$i]+$results1[$i+9]))*100,0).'</td>';
-                      }else { echo '<td></td>';}
-                    echo    '<td>'.($results3[$i]+$results3[$i+9]).'</td>'; 
-                    if(($results3[$i]+$results3[$i+9])!==0){
-                       echo  '<td>'.round(((($results2[$i]+$results2[$i+9])-($results3[$i]+$results3[$i+9]))/($results3[$i]+$results3[$i+9]))*100,0).'</td>';
-                          }else { echo '<td></td>';} 
-                          echo  '<td>'.($results4[$i]+$results4[$i+9]).'</td>';
-                          echo  '<td>'.($results5[$i]+$results5[$i+9]).'</td>';
-                           if(($results4[$i]+$results4[$i+9])!==0){
-                        echo  '<td>'.round((($results5[$i]+$results5[$i+9])/($results4[$i]+$results4[$i+9]))*100,0).'</td>';
-                           }else { echo '<td></td>';}
-                         echo    '<td>'.($results6[$i]+$results6[$i+9]).'</td>'; 
-                         if(($results6[$i]+$results6[$i+9])!==0){
-                            echo  '<td>'.round(((($results5[$i]+$results5[$i+9])-($results6[$i]+$results6[$i+9]))/($results6[$i]+$results6[$i+9]))*100,0).'</td>';
-                               }else { echo '<td></td>';} 
-
-
-
-
                  echo '</tr>';
              }
       }     
@@ -161,10 +148,6 @@ include_once ("../test/DB_Connect/mth_operation.php");
     </tbody>
    </table>
 
-   <style>
-tbody tr:last-child {
-  background: lightblue!important;
-}
-</style>
+  
 
 

@@ -20,7 +20,7 @@ function createData(){
   $wg_l = textboxValue('wg_l');
   $wg_f = textboxValue('wg_f');
   $cust = textboxValue('cust');
-  $nature = textboxValue('nature');
+  
   $arrival = textboxValue('arrival');
   $placement = textboxValue('placement');
   $lcompletion = textboxValue('lcompletion');
@@ -28,12 +28,15 @@ function createData(){
   $l_qty = textboxValue('l_qty');
   $f_qty = textboxValue('f_qty');
   $rr_no = textboxValue('rr_no');
-    
+
+
+      if($cust=='BSL' || $cust=='DSP' || $cust=='RSP' || $cust=='ISP' || $cust=='BSP'){$nature="CAPTIVE";} else{$nature="SALE";}
+   
 
     if($rpt_date && $unit && $rake_no && $raketype && $cust && $placement && $lcompletion && $ldgtime){
 
     $sql = "INSERT INTO mines_desppatch(unit, rpt_date, rake_no, raketype, cust, wg_l, wg_f, arrival, placement, lcompletion, ldgtime, l_qty, f_qty, rr_no, nature)
-                                              VALUES('$unit','$rpt_date', '$rake_no',  '$raketype', '$cust', $wg_l, $wg_f, '$arrival', '$placement', '$lcompletion', '$ldgtime', $l_qty, $f_qty, $rr_no, $nature)";
+                                              VALUES('$unit','$rpt_date', '$rake_no',  '$raketype', '$cust', $wg_l, $wg_f, '$arrival', '$placement', '$lcompletion', '$ldgtime', $l_qty, $f_qty, $rr_no, '$nature')";
    if(mysqli_query($GLOBALS['con'],$sql)){
        TextNode("success", "Record Successfully Inserted....");
    }else{
@@ -251,7 +254,6 @@ function updateData(){
     $wg_l = textboxValue('wg_l');
     $wg_f = textboxValue('wg_f');
     $cust = textboxValue('cust');
-    $nature = textboxValue('nature');
     $arrival = textboxValue('arrival');
     $placement = textboxValue('placement');
     $lcompletion = textboxValue('lcompletion');
@@ -259,7 +261,8 @@ function updateData(){
     $l_qty = textboxValue('l_qty');
     $f_qty = textboxValue('f_qty');
     $rr_no = textboxValue('rr_no');
-    
+    if($cust=='BSL' || $cust=='DSP' || $cust=='RSP' || $cust=='ISP' || $cust=='BSP'){$nature="CAPTIVE";} else{$nature="SALE";}
+
 
     if($rpt_date && $unit && $rake_no && $raketype && $cust && $placement && $lcompletion && $ldgtime){
 
@@ -496,5 +499,48 @@ function monthName_yymm($arg){
   }
 
 
+  function trend_analysis($column){
+    $sql="SELECT unit, (SUM($column)/7) as WeeklyAvg FROM u_pr_dly WHERE rpt_date between (CURDATE()-8) AND (CURDATE()-1) GROUP BY unit ";
+    //print_r($sql);
+    $result = mysqli_query($GLOBALS['con'], $sql ); 
+    $output = array();
+         if(mysqli_num_rows($result)>0){
+           while($row=mysqli_fetch_assoc($result)){
+           $output[] =$row;
+           }}
 
+    $sql="SELECT unit, (SUM($column)/30) as MonthlyAvg FROM u_pr_dly WHERE  rpt_date between (CURDATE()-31) AND (CURDATE()-1) GROUP BY unit ";
+    //print_r($sql);
+    $result = mysqli_query($GLOBALS['con'], $sql ); 
+        if(mysqli_num_rows($result)>0){
+          while($row=mysqli_fetch_assoc($result)){
+          $output[] =$row;
+          }}
+
+          $sql="SELECT unit, (SUM($column)/52) as FiftyTwoDaysAvg FROM u_pr_dly WHERE  rpt_date between (CURDATE()-53) AND (CURDATE()-1) GROUP BY unit ";
+    //print_r($sql);
+    $result = mysqli_query($GLOBALS['con'], $sql ); 
+        if(mysqli_num_rows($result)>0){
+          while($row=mysqli_fetch_assoc($result)){
+          $output[] =$row;
+          }}
+
+          $sql="SELECT unit, (SUM($column)/DAYOFMONTH(CURDATE()-1)) as MonthlyAvg FROM u_pr_dly WHERE  rpt_date between DATE_FORMAT(CURDATE() ,'%Y-%m-01') AND (CURDATE()-1) GROUP BY unit ";
+    //print_r($sql);
+    $result = mysqli_query($GLOBALS['con'], $sql ); 
+        if(mysqli_num_rows($result)>0){
+          while($row=mysqli_fetch_assoc($result)){
+          $output[] =$row;
+          }}
+
+          // $sql="SELECT unit, (SUM($column)/DAY(LAST_DAY(CURDATE()-1))) as LastYrMonthlyAvg FROM u_pr_dly WHERE  rpt_date between DATE_FORMAT(CURDATE() ,'(YEAR(CURDATE())-1)-%m-01') AND DATE_FORMAT(CURDATE() ,'(YEAR(CURDATE())-1)-%m-(DAY(CURDATE()-1))') GROUP BY unit ";
+          // print_r($sql);
+          // $result = mysqli_query($GLOBALS['con'], $sql ); 
+          //     if(mysqli_num_rows($result)>0){
+          //       while($row=mysqli_fetch_assoc($result)){
+          //       $output[] =$row;
+          //       }}
+
+           echo json_encode($output);
+       }
  

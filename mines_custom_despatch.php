@@ -11,8 +11,7 @@
                 <div class="col-md-2 input-group" ><?php inputElement("","text","Rake Type", "raketype",""); ?> </div>
                 <div class="col-md-2 input-group"><?php inputElement("","text","Wgs Lump", "wg_l",""); ?></div>
               <div class="col-md-2 input-group"> <?php inputElement("","text","Wgs Fines", "wg_f",""); ?> </div>
-              <div class="col-md-2 input-group"><?php inputElement("","text","Captive/Sale", "nature",""); ?> </div>
-              <div class="col-md-2 input-group" ><?php inputElement("","text","Destination", "cust",""); ?></div>
+              <div class="col-md-3 input-group" ><?php inputElement3(); ?></div>
       </div>
       <div class="row py-2">
                 <div class="col-md-3 input-group"><?php inputElement("","text","Arrival", "arrival",""); ?></div>

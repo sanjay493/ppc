@@ -101,7 +101,12 @@ if($mines_rakes!==0){
    echo '<td class="table-primary">-</td>';
 }
 }
+if($total_rakes!==0){
 echo '<td>'.secToHR($total_time/$total_rakes).'</td>';
+}else{
+   echo '<td>-</td>';
+
+}
 echo '<td>-</td>';
 //Total Rakes Mines Wise for the duration
 $total_rakes1=0;

@@ -1,7 +1,22 @@
+function displayData(e) {
+  let id = 0;
+  const td = $("tbody tr td");
+  let textValues = [];
+  for (const value of td) {
+    if (value.dataset.id == e.target.dataset.id) {
+      //console.log(e.target.dataset.id);
+      //console.log(value);
+
+      textValues[id++] = value.textContent;
+    }
+  }
+  return textValues;
+}
+
 $(".btnedit").click((e) => {
   let textValues = displayData(e);
   //console.log(textValues);
-  console.log(unit);
+  //console.log(unit);
 
   let id = $("input[name*='md_id']");
   let rpt_date = $("input[name*='rpt_date']");
@@ -10,7 +25,7 @@ $(".btnedit").click((e) => {
   let raketype = $("input[name*='raketype']");
   let wg_l = $("input[name*='wg_l']");
   let wg_f = $("input[name*='wg_f']");
-  let cust = $("input[name*='cust']");
+  let cust = $("select[name*='cust']");
   let nature = $("input[name*='nature']");
   let arrival = $("input[name*='arrival']");
   let placement = $("input[name*='placement']");
@@ -36,22 +51,10 @@ $(".btnedit").click((e) => {
   l_qty.val(textValues[13]);
   f_qty.val(textValues[14]);
   rr_no.val(textValues[15]);
+
+  console.log(textValues[7]);
+  unitcheck(textValues[7]);
 });
-
-function displayData(e) {
-  let id = 0;
-  const td = $("tbody tr td");
-  let textValues = [];
-  for (const value of td) {
-    if (value.dataset.id == e.target.dataset.id) {
-      //console.log(e.target.dataset.id);
-      //console.log(value);
-
-      textValues[id++] = value.textContent;
-    }
-  }
-  return textValues;
-}
 
 $(".prodnedit").click((e) => {
   let textValues = displayData(e);

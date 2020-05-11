@@ -33,7 +33,7 @@ if(isset($_POST['custom_rake_dist'])){
           $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Avg");
          
      $results =getRakeTime($date1,$date2);
-         
+         if(!empty($results)){
        echo '<tr>';
         $sumLdg=0;
         $sumRake =0;
@@ -51,6 +51,9 @@ if(isset($_POST['custom_rake_dist'])){
                  echo '<td class="bg-success">'. secToHR($sumLdg/$sumRake). '</td>';
       echo '</tr>';
       
+     }}
+     else{
+      TextNode("error", "No Data of the selected duration");
      }
 
   ?>

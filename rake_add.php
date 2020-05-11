@@ -12,8 +12,7 @@
                 <div class="col-md-2 input-group" ><?php inputElement("","text","Rake Type", "raketype",""); ?> </div>
                 <div class="col-md-2 input-group"><?php inputElement("","text","Wgs Lump", "wg_l",""); ?></div>
               <div class="col-md-2 input-group"> <?php inputElement("","text","Wgs Fines", "wg_f",""); ?> </div>
-              <div class="col-md-2 input-group" ><?php inputElement("","text","Destination", "cust",""); ?></div>
-              <div class="col-md-2 input-group"><?php inputElement("","text","Captive/Sale", "nature",""); ?> </div>
+              <div class="col-md-3 input-group" ><?php inputElement3(); ?></div>
 
       </div>
       <div class="row py-2">
@@ -101,6 +100,6 @@ if(isset($_POST['read'])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="myapp.js"></script>
-    <script src="formValidator.js"></script>
+
   </body>
 </html>

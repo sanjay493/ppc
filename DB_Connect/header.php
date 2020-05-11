@@ -21,6 +21,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
     <script src="https://kit.fontawesome.com/fe77521a69.js" crossorigin="anonymous"></script>
     <title>PPC Data Management & Reporting System!</title>
     <script type="text/javascript" src="showDiv.js"></script>
+    <script  type="text/javascript" src="formValidator.js"></script>
   </head>
 
 

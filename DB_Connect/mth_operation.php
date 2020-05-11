@@ -8,7 +8,7 @@ require_once("components.php");
 //Custom function used for Despatch Distribution Pages
     function sqlSelect($column, $table, $condition,$groupbycondition,$comm){
       $sql ="SELECT unit, comm, ". $column ." Qty FROM `" . $table . "` WHERE " . $condition." GROUP BY " .$groupbycondition;
-     //  print_r($sql);
+    // print_r($sql);
       $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
       $result = mysqli_query($GLOBALS['con'], $sql ); 
       //  8 Iron Ore mines 1 Flux Mines and Total of Iron Ore Mines; Total for flux is also considered 
@@ -19,17 +19,17 @@ require_once("components.php");
      //print_r($result);
       if(mysqli_num_rows($result)>0){
         while($row=mysqli_fetch_assoc($result)){
-        //      // echo $row_l_qty['cust']." " .$row_l_qty['unit']. " " .$row_l_qty['l_qty']. " <br />";
+        //$comm[2]= for Limestone
               if($row['comm']==$comm[2]){
-                $tempArray[18]=+$row['Qty'];  
+                $tempArray[18]+=$row['Qty'];  
               }else{
                   for ($i=0; $i<=count($comm)-2; $i++){
                  // $i=0 for Lump, $i=1 for Fines, $i=2 for Limestone
                  if($row['comm']==$comm[$i]){
                 for($j=0; $j<=8;$j++){
                   if ( $mines[$j]==$row['unit'] ){  
-                      $tempArray[$j+$i*9]=+$row['Qty'];      
-                      $tempArray[8+($i*9)]=$tempArray[8+($i*9)]+$row['Qty'];      
+                      $tempArray[$j+$i*9]+=$row['Qty'];      
+                      $tempArray[8+($i*9)]+=$row['Qty'];      
                }}}
               
               }
@@ -37,7 +37,7 @@ require_once("components.php");
                   }          
     }}
     else{     echo "Error: " . "<br>" . $GLOBALS['con']->error; }
-  // print_r($tempArray);
+  //print_r($tempArray);
     return $tempArray;
     }
     
@@ -46,24 +46,24 @@ require_once("components.php");
   $sql ="SELECT ". $column ." Qty FROM `" . $table . "` WHERE " . $condition2." GROUP BY " .$groupbycondition;
 //  print_r($sql);
   $result = mysqli_query($GLOBALS['con'], $sql ); 
-  $a = count($comm)*count($mines);
+  $a = count($comm)*(count($mines)+1);
   //  8 Iron Ore mines 1 Flux Mines and Total of Iron Ore Mines; Total for flux is also considered 
-  $tempArray =array_fill(0, 18, 0);
+  $tempArray =array_fill(0, $a, 0);
   
   if($sql){
     //print_r($result);
      if(mysqli_num_rows($result)>0){
        while($row=mysqli_fetch_assoc($result)){
        //      // echo $row_l_qty['cust']." " .$row_l_qty['unit']. " " .$row_l_qty['l_qty']. " <br />";
-             if($row['comm']=='L'){
+             if($row['comm']==$comm[0]){
               for($j=0; $j<=7;$j++){
                 if ( $mines[$j]==$row['unit'] ){  
-                    $tempArray[$j]=+$row['Qty'];      
+                    $tempArray[$j]+=$row['Qty'];      
                     $tempArray[8]=$tempArray[8]+$row['Qty'];      
-             }}}else
+             }}}else  if($row['comm']==$comm[1])
              {for($j=0; $j<=7;$j++){
               if ( $mines[$j]==$row['unit'] ){  
-                  $tempArray[$j+9]=+$row['Qty'];      
+                  $tempArray[$j+9]+=$row['Qty'];      
                   $tempArray[17]=$tempArray[17]+$row['Qty'];      
            }}}}}    
    }
@@ -176,32 +176,32 @@ $mth++;
 return $dummyMth;
 }
 
-
 function production_despatch_mth($column2,$table2,$condition3,$groupbycondition,$orderby,$yymm1,$yymm2){
   $sql= "SELECT ".$column2." FROM ".$table2." WHERE ". $condition3." GROUP BY ".$groupbycondition." ORDER BY ".$orderby;
 $result = mysqli_query($GLOBALS['con'], $sql ); 
-
 //print_r($sql);
 $dummyMth=month_list($yymm1,$yymm2);
-//print_r($dummyMth);
-$dummyArray=array_fill(0,3*COUNT($dummyMth),0);
-//$dummyArray=array();
-//print_r($dummyMth);
-//print_r("-");
-//print_r(3*COUNT($dummyMth));
+$dummyArray=array_fill(0,3*(COUNT($dummyMth)+1),0);
+
 if(mysqli_num_rows($result)>0){
   while($row=mysqli_fetch_assoc($result)){
-       
-        $m=0;$a=0;
+  
+    $m=0;$a=0;
     while($a<3*COUNT($dummyMth))
      {      
              if($row['yymm']==(string)$dummyMth[$a/3]){
             $dummyArray[$a]=(string)$dummyMth[$a/3];
+            
           //print_r($row['yymm']);
                   if($row['comm']=='L'){
-                  $dummyArray[$a+1]+=$row['act_qty'];}
+                  $dummyArray[$a+1]+=$row['act_qty'];
+                  $dummyArray[3*COUNT($dummyMth)+1]+=$row['act_qty'];
+                }
                   else{
                   $dummyArray[$a+2]+=$row['act_qty'];
+                   $dummyArray[3*COUNT($dummyMth)+2]+=$row['act_qty'];
+
+
                 }}else{
          //print_r($row['yymm']);
          // print_r('-');
@@ -217,11 +217,31 @@ if(mysqli_num_rows($result)>0){
   }
   
 }
-print_r($dummyArray);
+//print_r($dummyArray);
+return $dummyArray;
+}
+
+
+
+
+function production_despatch_annual($column2,$table2,$condition3){
+  $sql= "SELECT ".$column2." FROM ".$table2." WHERE ". $condition3;
+//print_r($sql);
+$result = mysqli_query($GLOBALS['con'], $sql ); 
+$dummyArray=array_fill(0,2,0);
+if(mysqli_num_rows($result)>0){
+  while($row=mysqli_fetch_assoc($result))
+     { if($row['comm']=='L'){$dummyArray[0]+=$row['act_qty'];}
+        elseif($row['comm']=='F'){$dummyArray[1]+=$row['act_qty'];}
+     }
+}
+//print_r($dummyArray);
 return $dummyArray;
 }
 
 ?>
+
+
 
 
 

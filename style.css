@@ -38,7 +38,6 @@ select {
   font-size: 20px !important;
   font-weight: bold !important;
   font-family: monospace;
-  color: crimson !important;
 }
 input[name="rpt_date"],
 input[name="cust"],
@@ -52,14 +51,14 @@ input[name="rake_no"] {
   border: 2px solid red !important;
   border-radius: 4px !important;
 }
-
+/* 
 .fa-exclamation-circle,
 .fa-check-circle {
   visibility: hidden;
   position: absolute;
   top: 10px;
   right: 20px;
-}
+} */
 
 small {
   visibility: hidden;
@@ -72,7 +71,7 @@ small {
   top: 30%;
   right: 50%;
   font-size: large;
-  background-color: rosybrown;
+  background-color: red;
   z-index: 1000;
 }
 
@@ -141,4 +140,13 @@ tr:last-child {
 }
 .carousel-item {
   height: 40rem !important;
+}
+.rake_dist {
+  position: relative;
+}
+.validation_msg {
+  position: absolute;
+  top: 10px;
+  color: red;
+  font-size: 1.3rem;
 }
