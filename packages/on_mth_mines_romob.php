@@ -65,7 +65,7 @@ if(isset($_POST['on_mth_mines'])){
          $condition4= "(yymm>='$start_mth_lyr' AND yymm<='$lyr_mth')";
 
          $groupbycondition ="unit, comm";
-         $comm=array("RM", "OB");
+         $comm=array("RM", "OB","SG");
          $comm1  =array("LS");
          $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
          $mines1=array("KTR");
@@ -85,9 +85,9 @@ if(isset($_POST['on_mth_mines'])){
  
      for($i=0; $i<=8; $i++){
        echo '<tr>';
-       echo '<td rowspan="4" class="td-bold">'.$mines[$i].'</td>';
+       echo '<td rowspan="5" class="td-bold">'.$mines[$i].'</td>';
              $j=0;
-             while($j<=9){
+             while($j<=((count($comm)-1)*count($mines))){
                 echo '<tr>';
                 echo '<td>'.$comm[$j/9].'</td>';
                 echo  '<td>'.$results1[($i+$j)].'</td>';
@@ -119,25 +119,42 @@ if(isset($_POST['on_mth_mines'])){
        // For Mines wise Total 
        echo '<tr class="table-primary">';
        echo '<td>Total</td>';
-       echo  '<td>'.($results1[$i]+$results1[($i+9)]).'</td>';
-                echo  '<td>'.($results2[$i]+$results2[($i+9)]).'</td>';
-                   if(($results1[$i]+$results1[($i+9)])!==0){
-                echo  '<td>'.round((($results2[$i]+$results2[($i+9)])/($results1[$i]+$results1[($i+9)]))*100,0).'</td>';
+	   $k=0;
+	   $x=0;
+	   $y=0;
+	   $z=0;
+	   $x1=0;
+	   $y1=0;
+	   $z1=0;
+	   while($k<count($comm)){
+	   $x +=$results1[$i+($k*(count($mines)))];
+	   $y +=$results2[$i+($k*(count($mines)))];
+	   $z +=$results3[$i+($k*(count($mines)))];
+	   $x1 +=$results4[$i+($k*(count($mines)))];
+	   $y1 +=$results5[$i+($k*(count($mines)))];
+	   $z1 +=$results6[$i+($k*(count($mines)))];
+	   $k++;
+	   }
+	   
+       echo  '<td>'.$x.'</td>';
+                echo  '<td>'.$y.'</td>';
+                   if($x!==0){
+                echo  '<td>'.round((($y)/($x))*100,0).'</td>';
                    }else { echo '<td></td>';}
-                 echo    '<td>'.($results3[$i]+$results3[($i+9)]).'</td>'; 
-                 if(($results3[$i]+$results3[($i+9)])!==0){
-                    echo  '<td>'.round((((($results2[$i]+$results2[($i+9)])-($results3[$i]+$results3[($i+9)])))/($results3[$i]+$results3[($i+9)]))*100,0).'</td>';
+                 echo    '<td>'.$z.'</td>'; 
+                 if($z!==0){
+                    echo  '<td>'.round((((($y)-($z)))/($z))*100,0).'</td>';
                        }else { echo '<td></td>';} 
 
-                       echo  '<td>'.($results4[$i]+$results4[($i+9)]).'</td>';
-                       echo  '<td>'.($results5[$i]+$results5[($i+9)]).'</td>';
-                          if(($results4[$i]+$results4[($i+9)])!==0){
-                       echo  '<td>'.round((($results5[$i]+$results5[($i+9)])/($results4[$i]+$results4[($i+9)]))*100,0).'</td>';
-                          }else { echo '<td></td>';}
-                        echo    '<td>'.($results6[$i]+$results6[($i+9)]).'</td>'; 
-                        if(($results6[$i]+$results6[($i+9)])!==0){
-                           echo  '<td>'.round((((($results5[$i]+$results5[($i+9)])-($results6[$i]+$results6[($i+9)])))/($results6[$i]+$results6[($i+9)]))*100,0).'</td>';
-                              }else { echo '<td></td>';} 
+                       echo  '<td>'.$x1.'</td>';
+                       echo  '<td>'.$y1.'</td>';
+                           if($x1!==0){
+                echo  '<td>'.round((($y1)/($x1))*100,0).'</td>';
+                   }else { echo '<td></td>';}
+                 echo    '<td>'.$z1.'</td>'; 
+                 if($z!==0){
+                    echo  '<td>'.round((((($y1)-($z1)))/($z1))*100,0).'</td>';
+                       }else { echo '<td></td>';}
               echo '</tr>';
 }}
  ?>

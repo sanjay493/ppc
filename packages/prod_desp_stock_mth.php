@@ -23,13 +23,22 @@
     $mine1 = textboxValue('mines1');
     $start_yr =(int)substr($yymm1,0,4);
     $end_yr =(int)substr($yymm2,0,4);
+    //if $yymm2 is empty it should be current yymm
+    if($yymm2==""){
+      $yymm2=(int)date('Ym');
+    }
    
+    //$condition="(yymm>='$yymm1' AND yymm<='$yymm2') AND unit='$mine1' AND comm IN('L', 'F' ) ","yymm, comm ","yymm DESC , comm DESC ";
     $dummyMth=month_list($yymm1,$yymm2);
   // print_r($dummyMth);
-    
-
-  $result=production_despatch_mth("yymm, comm,act_qty as act_qty","u_pr_mth", "(yymm>='$yymm1' AND yymm<='$yymm2') AND unit='$mine1' AND comm IN('L', 'F' ) ","yymm, comm ","yymm DESC , comm DESC ",$yymm1,$yymm2);
-  $result1=production_despatch_mth("yymm, comm, SUM(act_qty) as act_qty","u_ds_mth", "(yymm>='$yymm1' AND yymm<='$yymm2') AND unit='$mine1' AND comm IN('L', 'F' ) ","yymm, comm ","yymm DESC , comm DESC ",$yymm1,$yymm2);
+    if($mine1==""){
+	$condition="(yymm>='$yymm1' AND yymm<='$yymm2') AND comm IN('L', 'F' ) ";
+	}
+	else{
+	$condition="(yymm>='$yymm1' AND yymm<='$yymm2') AND unit='$mine1' AND comm IN('L', 'F' ) ";
+	}
+  $result=production_despatch_mth("yymm, comm,sum(act_qty) as act_qty","u_pr_mth", $condition ,"yymm, comm ","yymm DESC , comm DESC ", $yymm1,$yymm2);
+  $result1=production_despatch_mth("yymm, comm, SUM(act_qty) as act_qty","u_ds_mth", $condition,"yymm, comm ","yymm DESC , comm DESC ", $yymm1,$yymm2);
 //print_r($result);
 $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
 $mines_name=["Kiriburu Iron Ore Mines", "Meghahatuburu Iron Ore Mines","Bolani Ore Mines", "Barsua Iron Mines", "Taldih Iron Mines","Kalta Iron Mines", "Gua Ore Mines","Manoharpur Ore Mines"];
@@ -43,7 +52,7 @@ $mines_name=["Kiriburu Iron Ore Mines", "Meghahatuburu Iron Ore Mines","Bolani O
     if($result[$i]==0){
       echo '<td>Total</td>';
     }else {
-      echo '<td>'.$result[$i].'</td>';
+      echo '<td>'.monthName_yymm($result[$i]).'-'.(int)substr($result[$i],0,4).'</td>';
     }
     
     while($j<3){

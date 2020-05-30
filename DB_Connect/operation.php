@@ -318,16 +318,16 @@ if(isset($_POST['mth_despatch'])){
       $date1 = textboxValue('date1');
       $date2 = textboxValue('date2');
     // Monthly Despatch insertion in Monthly Table from Daily Despatch Table
-// dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'L', SUM(l_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
-// dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'F', SUM(f_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
-//      // Monthly Production insertion in Monthly Table from Daily Production Table
-dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'L', SUM(dept_lump+lump_darea+lump_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'F', SUM(dept_fines+fines_darea+fines_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  //Monthly ROM,  OB & DRILL insertion in Monthly Table from Daily ROM,  OB & DRILL Table
- dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'OB', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(drill)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-   // rake_ldg_time_mth_table($date1,$date2);
+dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'L', SUM(l_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
+dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, cust, 'F', SUM(f_qty)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by unit,cust");
+//Monthly Production insertion in Monthly Table from Daily Production Table
+//dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'L', SUM(dept_lump+lump_darea+lump_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+//dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'F', SUM(dept_fines+fines_darea+fines_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+ // Monthly ROM,  OB & DRILL insertion in Monthly Table from Daily ROM,  OB & DRILL Table
+ //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+//dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'OB', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+  //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(drill)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+   //rake_ldg_time_mth_table($date1,$date2);
 }
 
 function dly_mth($mth_table, $mth_table_columns, $dly_table, $dly_table_columns,$conditions){
@@ -499,48 +499,47 @@ function monthName_yymm($arg){
   }
 
 
-  function trend_analysis($column){
-    $sql="SELECT unit, (SUM($column)/7) as WeeklyAvg FROM u_pr_dly WHERE rpt_date between (CURDATE()-8) AND (CURDATE()-1) GROUP BY unit ";
+  function trend_analysis($column, $table, $date1,$date2){
+    $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+    $sql="SELECT $column FROM $table WHERE rpt_date between $date1 AND $date2 GROUP BY unit ";
     //print_r($sql);
     $result = mysqli_query($GLOBALS['con'], $sql ); 
-    $output = array();
+    $output = array_fill(0,8,0);
          if(mysqli_num_rows($result)>0){
            while($row=mysqli_fetch_assoc($result)){
-           $output[] =$row;
+            for($i=0; $i<8; $i++){
+              if($row['unit']==$mines[$i]){             
+                $output[$i] +=$row['Avg'];
+                  }}
            }}
 
-    $sql="SELECT unit, (SUM($column)/30) as MonthlyAvg FROM u_pr_dly WHERE  rpt_date between (CURDATE()-31) AND (CURDATE()-1) GROUP BY unit ";
-    //print_r($sql);
-    $result = mysqli_query($GLOBALS['con'], $sql ); 
-        if(mysqli_num_rows($result)>0){
-          while($row=mysqli_fetch_assoc($result)){
-          $output[] =$row;
-          }}
-
-          $sql="SELECT unit, (SUM($column)/52) as FiftyTwoDaysAvg FROM u_pr_dly WHERE  rpt_date between (CURDATE()-53) AND (CURDATE()-1) GROUP BY unit ";
-    //print_r($sql);
-    $result = mysqli_query($GLOBALS['con'], $sql ); 
-        if(mysqli_num_rows($result)>0){
-          while($row=mysqli_fetch_assoc($result)){
-          $output[] =$row;
-          }}
-
-          $sql="SELECT unit, (SUM($column)/DAYOFMONTH(CURDATE()-1)) as MonthlyAvg FROM u_pr_dly WHERE  rpt_date between DATE_FORMAT(CURDATE() ,'%Y-%m-01') AND (CURDATE()-1) GROUP BY unit ";
-    //print_r($sql);
-    $result = mysqli_query($GLOBALS['con'], $sql ); 
-        if(mysqli_num_rows($result)>0){
-          while($row=mysqli_fetch_assoc($result)){
-          $output[] =$row;
-          }}
-
-          // $sql="SELECT unit, (SUM($column)/DAY(LAST_DAY(CURDATE()-1))) as LastYrMonthlyAvg FROM u_pr_dly WHERE  rpt_date between DATE_FORMAT(CURDATE() ,'(YEAR(CURDATE())-1)-%m-01') AND DATE_FORMAT(CURDATE() ,'(YEAR(CURDATE())-1)-%m-(DAY(CURDATE()-1))') GROUP BY unit ";
-          // print_r($sql);
-          // $result = mysqli_query($GLOBALS['con'], $sql ); 
-          //     if(mysqli_num_rows($result)>0){
-          //       while($row=mysqli_fetch_assoc($result)){
-          //       $output[] =$row;
-          //       }}
-
-           echo json_encode($output);
+         //print_r($output);
+          return $output;
        }
+ function on_date_production($column, $table, $date2){
+  $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+  $sql="SELECT $column FROM $table WHERE rpt_date =  $date2 GROUP BY unit ";
+ // print_r($sql);
+  $result = mysqli_query($GLOBALS['con'], $sql ); 
+  $output = array_fill(0,8,0);
+  if($result){
+       if(mysqli_num_rows($result)>0){
+         while($row=mysqli_fetch_assoc($result)){
+          for($i=0; $i<8; $i++){
+            if($row['unit']==$mines[$i]){             
+              $output[$i] +=$row['Total'];
+                }}
+         }}
+  }
+       //print_r($output);
+        return $output;
+ }
+
+ function growth_precentage($num1, $num2){
+   $dummy="-";
+   if($num1==0 || $num2==0){
+     return $dummy;
+   }else{
+  return round((($num2-$num1)/$num1),2);
+ }}
  

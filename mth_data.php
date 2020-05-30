@@ -22,10 +22,11 @@ $yymm7='202004';
 $yymm8='202103';
 
 ?>
-<div><?php rake_time_mth($yymm5, $yymm6, $yymm_list3); ?></div>
+<div><?php rake_time_mth($yymm7, $yymm8, $yymm_list3); ?></div>
 <div><?php rake_time_mth($yymm5, $yymm6, $yymm_list2); ?></div>
-<div><?php rake_time_mth($yymm1, $yymm2, $yymm_list); ?></div>
+
 <div><?php rake_time_mth($yymm3, $yymm4, $yymm_list1); ?></div>
+<div><?php rake_time_mth($yymm1, $yymm2, $yymm_list); ?></div>
 
 <div class="d-flex justify-content-center">
         <form action="" method="post">

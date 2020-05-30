@@ -24,10 +24,34 @@ include_once ("../DB_Connect/mth_operation.php");
 // $sql_weekly = date ("Y-m-d", strtotime($weekly));
 
 $lump_Avg= trend_analysis('lump_darea+lump_p+dept_lump');
-$prodn_Avg= trend_analysis('lump_darea+lump_p+dept_lump+fines_darea+fines_p+dept_fines');
+//$prodn_Avg= trend_analysis('lump_darea+lump_p+dept_lump+fines_darea+fines_p+dept_fines');
+
+echo '<tr>';
+//if()
+
+echo '<td>></td>';
+$mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
+$attri=array("WeeklyAvg","ThirtyDaysAvg", "FiftyTwoDaysAvg", "MonthlyAvg");
+for($i=0; $i<count($mines); $i++){
+  for($j=0; $j<count($attri); $j++){
+       if($result[$i][$j]==$mines[$i])
+}}
 
 
-
+Array ( [0] => Array ( [unit] => BAR [WeeklyAvg] => 277.2857 )
+             [1] => Array ( [unit] => BAR [ThirtyDaysAvg] => 26627.8333 ) 
+             [2] => Array ( [unit] => BOL [ThirtyDaysAvg] => 94576.7333 ) 
+             [3] => Array ( [unit] => KAL [ThirtyDaysAvg] => 6684.5667 ) 
+             [4] => Array ( [unit] => KRB [ThirtyDaysAvg] => 37171.0000 ) 
+             [5] => Array ( [unit] => MBR [ThirtyDaysAvg] => 34718.7333 ) 
+             [6] => Array ( [unit] => TAL [ThirtyDaysAvg] => 13768.9000 ) 
+             [7] => Array ( [unit] => BAR [FiftyTwoDaysAvg] => 15362.2115 ) 
+             [8] => Array ( [unit] => BOL [FiftyTwoDaysAvg] => 54563.5000 ) 
+             [9] => Array ( [unit] => KAL [FiftyTwoDaysAvg] => 3856.4808 ) 
+             [10] => Array ( [unit] => KRB [FiftyTwoDaysAvg] => 21444.8077 ) 
+             [11] => Array ( [unit] => MBR [FiftyTwoDaysAvg] => 20030.0385 ) 
+             [12] => Array ( [unit] => TAL [FiftyTwoDaysAvg] => 7943.5962 ) 
+             [13] => Array ( [unit] => BAR [MonthlyAvg] => 221.9091 ) ) >
 
 ?>
 

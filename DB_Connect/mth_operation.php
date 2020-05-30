@@ -46,7 +46,7 @@ require_once("components.php");
   $sql ="SELECT ". $column ." Qty FROM `" . $table . "` WHERE " . $condition2." GROUP BY " .$groupbycondition;
 //  print_r($sql);
   $result = mysqli_query($GLOBALS['con'], $sql ); 
-  $a = count($comm)*(count($mines)+1);
+  $a = count($comm)*(count($mines));
   //  8 Iron Ore mines 1 Flux Mines and Total of Iron Ore Mines; Total for flux is also considered 
   $tempArray =array_fill(0, $a, 0);
   
@@ -55,18 +55,24 @@ require_once("components.php");
      if(mysqli_num_rows($result)>0){
        while($row=mysqli_fetch_assoc($result)){
        //      // echo $row_l_qty['cust']." " .$row_l_qty['unit']. " " .$row_l_qty['l_qty']. " <br />";
-             if($row['comm']==$comm[0]){
+	   $i=0;
+	   while($i<count($comm)){
+             if($row['comm']==$comm[$i]){
               for($j=0; $j<=7;$j++){
                 if ( $mines[$j]==$row['unit'] ){  
-                    $tempArray[$j]+=$row['Qty'];      
-                    $tempArray[8]=$tempArray[8]+$row['Qty'];      
-             }}}else  if($row['comm']==$comm[1])
-             {for($j=0; $j<=7;$j++){
-              if ( $mines[$j]==$row['unit'] ){  
-                  $tempArray[$j+9]+=$row['Qty'];      
-                  $tempArray[17]=$tempArray[17]+$row['Qty'];      
-           }}}}}    
-   }
+                    $tempArray[$j+count($mines)*$i]+=$row['Qty'];      
+                    $tempArray[(($i+1)*count($mines))-1]+=$row['Qty'];      
+             }}}
+			 $i++;
+			// else  if($row['comm']==$comm[1])
+             //{for($j=0; $j<=7;$j++){
+              //if ( $mines[$j]==$row['unit'] ){  
+                //  $tempArray[$j+9]+=$row['Qty'];      
+                 // $tempArray[17]=$tempArray[17]+$row['Qty'];      
+          // }}}
+		  }
+		  }    
+  }}
 else{     echo "Error: ".$sql."<br>" . $GLOBALS['con']->error; }
 //print_r($tempArray);
 return $tempArray;

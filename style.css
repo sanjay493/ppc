@@ -112,6 +112,7 @@ tr:last-child {
   background: blueviolet;
   padding: 2px;
   box-shadow: black;
+  color:white;
 }
 .textP {
   grid-row: 2 / 4;

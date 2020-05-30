@@ -29,7 +29,12 @@ $mines=array("Kiriburu", "Meghahatuburu","Bolani", "Barsua","Taldih","Kalta","Gu
 
 
 ?>
+<div class="container-fluid justify-content-center">
+<div class="row">
+<div class="col-lg-4"><?php include("mines_trends.php"); ?> </div>
 
+</div>
+</div>
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
