@@ -27,7 +27,7 @@
 if(isset($_POST['custom_rake_dist'])){
   $date1 = textboxValue('date1');
     $date2 = textboxValue('date2');
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
+    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
     // No of days calculation from the user input date rage
 $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
   
@@ -43,11 +43,17 @@ $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
  $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
 
      $results = getDespQty($column1, $table, $condition, $groupbycondition);
+    // $dest="SELECT COUNT(DISTINCT cust) FROM $table WHERE $condition";
      if(!empty($results)){
      for($i=0; $i<COUNT($destination); $i++){
        echo '<tr>';
        // Display Destination  at start of each row
+      //  if($i<$dest){
        echo '<td>'.$destination[$i].'</td>';
+      //  }else{
+      //    echo '<td>Sale</td>';
+
+      //  }
        for($j=0; $j<=7;$j++){
             //Display Actual nos of rakes Count in row for each Mines in destination row
                echo '<td>' . round($results[$i][$j],0).' </td>';

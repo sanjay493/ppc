@@ -7,7 +7,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
 
 
 <?php
-        function plantdistribution($yymm,$cust){
+        function plantdistribution_sale($yymm){
         $lyr_mth =strval((int)substr($yymm,0,4)-1).substr($yymm,4,2);
         if((int)substr($yymm,4,2) <=3){
             $start_mth_cyr =strval((int)substr($yymm,0,4)-1).'04';
@@ -21,7 +21,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
          
          $comm=array("L", "F", "LS");
 
-         // $yymm =textboxValue('$yymm');
+        // $yymm =textboxValue('yymm');
 
         $monthNum = (int)substr($yymm,4,2); 
         // Create date object to store the DateTime format 
@@ -37,7 +37,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
 <table class="table table-sm table-bordered table-striped table-hover text-center">
    <thead class="thead">
       <tr>
-         <th colspan="31" class="bg-primary text-white"> Customer:: <strong><?php echo $cust; ?></strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName. "-".substr($yymm,0,4) ?><strong></th>
+         <th colspan="31" class="bg-primary text-white"> Customer:: <strong>Sale</strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName."-". substr($yymm,0,4) ?><strong></th>
       </tr>
    <tr> 
             <th rowspan="3" class="text-center">Mines</th>
@@ -94,12 +94,12 @@ include_once ("../test/DB_Connect/mth_operation.php");
    <tbody>
 <?php
   
-        $results1= sqlSelect( "SUM(plan_qty) as", "u_ds_plan", "yymm='$yymm' AND cust='$cust'","unit, comm", $comm);
-       $results2= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "yymm='$yymm' AND cust='$cust'","unit, comm", $comm);
-        $results3= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "yymm='$lyr_mth' AND cust='$cust'","unit, comm", $comm);
-        $results4= sqlSelect( "SUM(plan_qty) as", "u_ds_plan", "(yymm>='$start_mth_cyr' AND yymm<='$yymm') AND cust='$cust'","unit, comm", $comm);
-        $results5= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "(yymm>='$start_mth_cyr' AND yymm<='$yymm') AND cust='$cust'","unit, comm", $comm);
-        $results6= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "(yymm>='$start_mth_lyr' AND yymm<='$lyr_mth') AND cust='$cust'","unit, comm", $comm);
+        $results1= sqlSelect( "SUM(plan_qty) as", "u_ds_plan", "yymm='$yymm' AND cust NOT IN ('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
+       $results2= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "yymm='$yymm' AND  cust NOT IN('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
+        $results3= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "yymm='$lyr_mth' AND  cust NOT IN('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
+        $results4= sqlSelect( "SUM(plan_qty) as", "u_ds_plan", "(yymm>='$start_mth_cyr' AND yymm<='$yymm') AND  cust NOT IN('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
+        $results5= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "(yymm>='$start_mth_cyr' AND yymm<='$yymm') AND  cust NOT IN('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
+        $results6= sqlSelect( "SUM(act_qty) as", "u_ds_mth", "(yymm>='$start_mth_lyr' AND yymm<='$lyr_mth') AND  cust NOT IN('BSL','DSP','RSP','ISP','BSP')","unit, comm", $comm);
         
            $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");  
      for($i=0; $i<=8; $i++){

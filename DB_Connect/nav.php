@@ -20,6 +20,7 @@
       <a class="nav-link" href="monthly_report.php">For the Monthly Report</a>
       
       <a class="nav-link" href="mth_data.php">Month Wise Figures</a>
+      <a class="nav-link" href="sale_betn_dates.php">Month Wise Sale</a>
       <a class="nav-link" href="anuual_prod_desp.php">Yearly Wise Figures</a>
       </div> </li>
 

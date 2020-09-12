@@ -27,7 +27,7 @@
 if(isset($_POST['custom_rake_dist'])){
   $date1 = textboxValue('date1');
     $date2 = textboxValue('date2');
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
+    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
     // No of days calculation from the user input date rage
 $daysInt = round(abs(strtotime($date2) - strtotime($date1))/86400)+1;
   

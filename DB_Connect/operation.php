@@ -324,10 +324,10 @@ dly_mth("u_ds_mth","yymm, unit, cust, comm, act_qty","mines_desppatch","EXTRACT(
 //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'L', SUM(dept_lump+lump_darea+lump_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
 //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'F', SUM(dept_fines+fines_darea+fines_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
  // Monthly ROM,  OB & DRILL insertion in Monthly Table from Daily ROM,  OB & DRILL Table
- //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+//dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'RM', SUM(dept_rm+cont_rm_fg+cont_rm_darea+cont_rm_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
 //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'OB', SUM(dept_ob+cont_ob_fg+cont_ob_darea+cont_ob_p)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-  //dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(drill)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
-   //rake_ldg_time_mth_table($date1,$date2);
+//dly_mth("u_pr_mth","yymm, unit, comm, act_qty","u_pr_dly","EXTRACT( YEAR_MONTH FROM `rpt_date` ) as mthyear, unit, 'DR', SUM(drill)","(rpt_date>='$date1' AND rpt_date<='$date2') GROUP by mthyear, unit");
+//rake_ldg_time_mth_table($date1,$date2);
 }
 
 function dly_mth($mth_table, $mth_table_columns, $dly_table, $dly_table_columns,$conditions){
@@ -368,7 +368,7 @@ if(mysqli_query($GLOBALS['con'],$sql)){
 
    function getRakeTotal($column, $table, $condition, $groupbycondition){
                   
-    $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
+    $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
     $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
                 $rake= array_fill(0,(COUNT($destination)+1),array_fill(0,COUNT($mines),0));  
 

@@ -21,7 +21,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
          
          $comm=array("L", "F", "LS");
 
-         $yymm =textboxValue('yymm');
+     //    $yymm =textboxValue('yymm');
 
         $monthNum = (int)substr($yymm,4,2); 
         // Create date object to store the DateTime format 
@@ -37,7 +37,7 @@ include_once ("../test/DB_Connect/mth_operation.php");
 <table class="table table-sm table-bordered table-striped table-hover text-center">
    <thead class="thead">
       <tr>
-         <th colspan="31" class="bg-primary"> Customer:: <strong>Mines Total Despatch</strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName. substr($yymm,0,4) ?><strong></th>
+         <th colspan="31" class="bg-primary"> Customer:: <strong>Mines Total Despatch</strong>&nbsp; &nbsp;  For the Month of   &nbsp; &nbsp;<strong><?php echo $monthName."-". substr($yymm,0,4) ?><strong></th>
       </tr>
    <tr> 
             <th rowspan="3" class="text-center">Mines</th>

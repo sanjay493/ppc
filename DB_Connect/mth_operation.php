@@ -8,7 +8,7 @@ require_once("components.php");
 //Custom function used for Despatch Distribution Pages
     function sqlSelect($column, $table, $condition,$groupbycondition,$comm){
       $sql ="SELECT unit, comm, ". $column ." Qty FROM `" . $table . "` WHERE " . $condition." GROUP BY " .$groupbycondition;
-    // print_r($sql);
+    //print_r($sql);
       $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR","Total");
       $result = mysqli_query($GLOBALS['con'], $sql ); 
       //  8 Iron Ore mines 1 Flux Mines and Total of Iron Ore Mines; Total for flux is also considered 
@@ -107,7 +107,7 @@ function getDespQty($column, $table, $condition, $groupbycondition){
 
   $date1 = textboxValue('date1');
   $date2 = textboxValue('date2');
-  $destination =array("BSL","DSP","RSP","ISP", "BSP","PMSB", "ESCL");
+  $destination =array("BSL","DSP","RSP","ISP", "BSP","SALE");
   $mines=array("KRB", "MBR","BOL", "BAR","TAL","KAL","GUA","MPR");
   $qty= array_fill(0,(COUNT($destination)+1),array_fill(0,8,0));  
   $sql = "SELECT ".$column." FROM `". $table . "` WHERE " .$condition. "GROUP BY" .$groupbycondition;

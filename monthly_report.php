@@ -2,6 +2,7 @@
 include_once ("../test/DB_Connect/operation.php");
 
 include_once("../test/packages/on_mth_Iron_ore_despatch_distribution.php");
+include_once("../test/packages/on_mth_Iron_ore_despatch_distribution_sale.php");
 include_once("../test/packages/on_mth_Iron_ore_despatch_distribution_all.php");
 
 ?>
@@ -17,7 +18,7 @@ include_once("../test/packages/on_mth_Iron_ore_despatch_distribution_all.php");
 <?php
 if(isset($_POST['on_mth_mines'])){
 $yymm =textboxValue('yymm');}
-else {$yymm = '20203';}
+else {$yymm = '202006';}
 
 $monthNum = (int)substr($yymm,4,2); 
 // Create date object to store the DateTime format 
@@ -36,11 +37,12 @@ $monthName = $dateObj->format('F');
 <h4 class="text-center"> Monthly Despatch Distribution Plant Wise</h4>
 
 <?php
-        $cust =array("BSL", "DSP", "RSP","ISP", "BSP","PMSB","ESCL");
+        $cust =array("BSL", "DSP", "RSP","ISP", "BSP");
         $yymm =textboxValue('yymm');
         for($i=0; $i<COUNT($cust); $i++){
        plantdistribution($yymm,$cust[$i]);
         }
+        plantdistribution_sale($yymm);
         plantdistribution_all($yymm);  
   ?>
 </div>
